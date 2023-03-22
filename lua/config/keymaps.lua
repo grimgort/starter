@@ -32,7 +32,7 @@ vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {
 --]])
 
 vim.keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>", { noremap = false, silent = true })
-vim.keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>", { noremap = false, silent = true })
+vim.keymap.set("n", "<leader>ef", ":NvimTreeFindFileToggle<CR>", { noremap = false, silent = true })
 vim.keymap.set("n", "s", ":w<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<F8>", ":MinimapToggle<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<leader>nm", ":Dispatch npm start<CR>", { noremap = false, silent = false })
@@ -67,8 +67,8 @@ vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", { noremap = true,
 vim.keymap.set("n", "gf", ":lua vim.lsp.buf.format({async=true})<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gh", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<space>m", ":lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
---[[ vim.keymap.set("n", "gr", ":Trouble lsp_references<CR>", { noremap = true, silent = true }) ]]
+-- vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gk", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 -- -- Telescope
@@ -212,8 +212,8 @@ vim.keymap.set(
 )
 
 local opt = {}
-vim.keymap.set("n", "<F7>", ":CMake build_all -j4<cr>", opt)
-vim.keymap.set("n", "<F6>", ":CMake build_all --config Release -j4<cr>", opt)
+vim.keymap.set("n", "<F7>", ":CMakeBuild --config Debug -j4<cr>", opt)
+vim.keymap.set("n", "<F6>", ":CMakeBuild --config Release -j4<cr>", opt)
 vim.keymap.set("n", "<F5>", ':AsyncRun pwsh -Command "frintelcompile"<cr>', opt)
 vim.keymap.set("v", "*", [[y/\V<C-r>=escape(@",'/\')<CR><CR>]], {})
 -- vim.keymap.set("n", "<C-!>", ":%s/", opt)
@@ -233,6 +233,7 @@ vim.keymap.set("n", "<leader>za", ":tabnew<cr>", opt)
 --[[ vim.keymap.set("t", "²", "<C-\\><C-n>CloseAll<cr>", opt) ]]
 vim.keymap.set("n", "²", ":lua QuitAllLua()<cr>", opt)
 vim.keymap.set("i", "²", "<C-o>:lua QuitAllLua()<cr>", { silent = true })
+
 vim.keymap.set("t", "²", "<C-\\><C-n>:lua QuitAllLua()<cr>", { noremap = true, silent = true })
 
 vim.keymap.set("t", "<C-a>", "<C-\\><C-n>", opt)
@@ -275,200 +276,51 @@ vim.keymap.set("n", "<C-!>", "<cmd>Telescope command_history<cr>", opt)
 vim.keymap.set("n", "j", "gj", opt)
 vim.keymap.set("n", "k", "gk", opt)
 
-local which_key = require("which-key")
--- which_key.mappings["S"] = {
--- 	name = "Session",
--- 	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
--- 	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
--- 	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
--- }
--- local vmappings = {
--- 	["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
--- }
-local mappings = {
-  [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
-  ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
-  -- ["f"] = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
-  -- ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  b = {
-    name = "Buffers",
-    j = { "<cmd>BufferLinePick<cr>", "Jump" },
-    f = { "<cmd>Telescope buffers<cr>", "Find" },
-    b = { "<cmd>BDelete this<CR>", "Close Buffer" },
-    h = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    l = { "<cmd>BufferLineCycleNext<cr>", "Next" },
-    e = {
-      "<cmd>BufferLinePickClose<cr>",
-      "Pick which buffer to close",
-    },
-    g = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
-    m = {
-      "<cmd>BufferLineCloseRight<cr>",
-      "Close all to the right",
-    },
-    D = {
-      "<cmd>BufferLineSortByDirectory<cr>",
-      "Sort by directory",
-    },
-    L = {
-      "<cmd>BufferLineSortByExtension<cr>",
-      "Sort by language",
-    },
-  },
-  -- p = {
-  -- 	name = "Packer",
-  -- 	c = { "<cmd>PackerCompile<cr>", "Compile" },
-  -- 	i = { "<cmd>PackerInstall<cr>", "Install" },
-  -- 	s = { "<cmd>PackerSync<cr>", "Sync" },
-  -- 	S = { "<cmd>PackerStatus<cr>", "Status" },
-  -- 	u = { "<cmd>PackerUpdate<cr>", "Update" },
-  -- },
+vim.keymap.set("n", "<leader>bh", "<cmd>BufferLineCyclePrev<cr>", opt)
+vim.keymap.set("n", "<leader>bl", "<cmd>BufferLineCycleNext<cr>", opt)
+vim.keymap.set("n", "<leader>bm", "<cmd>BufferLineCloseRight<cr>", opt)
+vim.keymap.set("n", "<leader>bg", "<cmd>BufferLineCloseLeft<cr>", opt)
+vim.keymap.set("n", "<leader>bD", "<cmd>BufferLineSortByDirectory<cr>", opt)
+vim.keymap.set("n", "<leader>bL", "<cmd>BufferLineSortByExtension<cr>", opt)
 
-  -- " Available Debug Adapters:
-  -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
-  -- " Adapter configuration and installation instructions:
-  -- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-  -- " Debug Adapter protocol:
-  -- "   https://microsoft.github.io/debug-adapter-protocol/
-  -- " Debugging
-  g = {
-    name = "Git",
-    j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-    k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-    r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-    R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-    s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-    u = {
-      "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-      "Undo Stage Hunk",
-    },
-    o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    C = {
-      "<cmd>Telescope git_bcommits<cr>",
-      "Checkout commit(for current file)",
-    },
-    d = {
-      "<cmd>Gitsigns diffthis HEAD<cr>",
-      "Git Diff",
-    },
-    h = { "<cmd>Neogit<cr>", "Neogit" },
-    -- g = { "<cmd>LazyGit<cr>", "LazyGit" },
-    --[[ g = { "<cmd>lua _lazygit_toggle()<cr>", "LazyGit" }, ]]
-    m = { "<cmd>Neogit<cr>", "Neogit" },
-  },
-  l = {
-    name = "LSP",
-    -- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    --[[ a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "CodeLens Action" }, ]]
-    a = { "<cmd>CodeActionMenu<CR>", "CodeLens Action" },
-    h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "symbole help" },
-    d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
-    w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
-    I = { "<cmd>Mason<cr>", "Mason Info" },
-    j = {
-      vim.diagnostic.goto_next,
-      "Next Diagnostic",
-    },
-    k = {
-      vim.diagnostic.goto_prev,
-      "Prev Diagnostic",
-    },
-    f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
-    l = { "<cmd>GitMessenger<cr>", "Blame" },
-    -- p = {
-    --   name = "Peek",
-    --   d = { "<cmd>lua require('lvim.lsp.peek').Peek('definition')<cr>", "Definition" },
-    --   t = { "<cmd>lua require('lvim.lsp.peek').Peek('typeDefinition')<cr>", "Type Definition" },
-    --   i = { "<cmd>lua require('lvim.lsp.peek').Peek('implementation')<cr>", "Implementation" },
-    -- },
-    q = { vim.diagnostic.setloclist, "Quickfix" },
-    --[[ r = { vim.lsp.buf.rename, "Rename" }, ]]
-    S = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    s = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-    },
-    e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
-  },
-  s = {
-    name = "Search",
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    t = { "<cmd>Telescope live_grep<cr>", "Text" },
-    s = { "<cmd>Telescope grep_string<cr>", "Current word" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
-    p = {
-      "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
-      "Colorscheme with Preview",
-    },
-  },
-  T = {
-    name = "Treesitter",
-    i = { ":TSConfigInfo<cr>", "Info" },
-  },
-  S = {
-    name = "Session",
-    c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-    l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-    Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
-  },
-}
+vim.keymap.set("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>gl", "<cmd>lua require 'gitsigns'.blame_line()<cr>", opt)
+vim.keymap.set("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", opt)
+vim.keymap.set("n", "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", opt)
+vim.keymap.set("n", "<leader>go", "<cmd>Telescope git_status<cr>", opt)
+vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opt)
+vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opt)
+vim.keymap.set("n", "<leader>gC", "<cmd>Telescope git_bcommits<cr>", opt)
+vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", opt)
+vim.keymap.set("n", "<leader>gh", "<cmd>Neogit<cr>", opt)
 
-which_key.register(mappings, { prefix = "<leader>" })
+vim.keymap.set("n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<cr>", opt)
+vim.keymap.set("n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opt)
+vim.keymap.set("n", "<leader>lS", "<cmd>Telescope lsp_document_symbols<cr>", opt)
+vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opt)
+vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opt)
 
--- which_key.mappings["g"] = {
--- 	name = "Git",
--- 	j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
--- 	k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
--- 	-- l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
--- 	l = { "<cmd>GitMessenger<cr>", "Blame" },
--- 	p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
--- 	r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
--- 	R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
--- 	s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
--- 	u = {
--- 		"<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
--- 		"Undo Stage Hunk",
--- 	},
--- 	o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
--- 	b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
--- 	c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
--- 	C = {
--- 		"<cmd>Telescope git_bcommits<cr>",
--- 		"Checkout commit(for current file)",
--- 	},
--- 	d = {
--- 		"<cmd>Gitsigns diffthis HEAD<cr>",
--- 		"Git Diff",
--- 	},
--- 	g = { "<cmd>LazyGit<cr>", "LazyGit" },
--- 	M = {
--- 		":!git branch --merged | Select-String -Pattern '^(?!.*(master|.*-stable)).*$' | ForEach-Object { git branch -d $_.ToString().Trim() } <cr>",
--- 		"clean merged branch",
--- 	},
--- }
---
---
---
--- 'jk' for quitting insert mode
---[[ vim.keymap.set("i", "jk", "<ESC>", opt) ]]
--- 'kj' for quitting insert mode
---[[ vim.keymap.set("i", "kj", "<ESC>", opt) ]]
--- 'jj' for quitting insert mode
---[[ vim.keymap.set("i", "jj", "<ESC>", opt) ]]
+vim.keymap.set("n", "<leader>sb", "<cmd>Telescope git_branches<cr>", opt)
+vim.keymap.set("n", "<leader>sc", "<cmd>Telescope colorscheme<cr>", opt)
+vim.keymap.set("n", "<leader>sf", "<cmd>Telescope find_files<cr>", opt)
+vim.keymap.set("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", opt)
+vim.keymap.set("n", "<leader>sH", "<cmd>Telescope highlights<cr>", opt)
+vim.keymap.set("n", "<leader>sM", "<cmd>Telescope man_pages<cr>", opt)
+vim.keymap.set("n", "<leader>sr", "<cmd>Telescope oldfiles<cr>", opt)
+vim.keymap.set("n", "<leader>sR", "<cmd>Telescope registers<cr>", opt)
+vim.keymap.set("n", "<leader>st", "<cmd>Telescope live_grep<cr>", opt)
+vim.keymap.set("n", "<leader>ss", "<cmd>Telescope grep_string<cr>", opt)
+vim.keymap.set("n", "<leader>sk", "<cmd>Telescope keymaps<cr>", opt)
+vim.keymap.set("n", "<leader>sC", "<cmd>Telescope commands<cr>", opt)
+
+vim.keymap.set("n", "<leader>Sc", "<cmd>lua require('persistence').load()<cr>", opt)
+vim.keymap.set("n", "<leader>Sl", "<cmd>lua require('persistence').load({ last = true })<cr>", opt)
+vim.keymap.set("n", "<leader>SQ", "<cmd>lua require('persistence').stop()<cr>", opt)
+
 -- Move current line / block with Alt-j/k ala vscode.
 vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opt)
 -- Move current line / block with Alt-j/k ala vscode.
@@ -485,11 +337,10 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 
 -- Resize with arrows
-vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", opt)
-vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", opt)
-vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opt)
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opt)
-
+-- vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", opt)
+-- vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", opt)
+-- vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", opt)
+-- vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opt)
 -- Move current line / block with Alt-j/k a la vscode.
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", opt)
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opt)
@@ -555,10 +406,10 @@ vim.keymap.set("n", "q", "<Nop>")
 -----------------------------------
 --lsp saga keymap
 -----------------------------------
-vim.keymap.set("n", "gpr", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+-- vim.keymap.set("n", "gpr", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 -- Code action
 -- vim.keymap.set({ "n", "v" }, "ga", "<cmd>Lspsaga code_action<CR>", { silent = true })
-vim.keymap.set({ "n", "v" }, "ga", "<cmd>vim.lsp.buf.code_action<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 
 -- Rename
 --[[ vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<CR>", { silent = true }) ]]
@@ -568,25 +419,25 @@ vim.keymap.set("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent 
 -- you can edit the definition file in this flaotwindow
 -- also support open/vsplit/etc operation check definition_action_keys
 -- support tagstack C-t jump back
-vim.keymap.set("n", "gpd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+-- vim.keymap.set("n", "gpd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 
 -- Show line diagnostics
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+-- vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 
 -- Show cursor diagnostic
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+-- vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 
 -- Diagnsotic jump can use `<c-o>` to jump back
-vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+-- vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+-- vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
 
 -- Only jump to error
-vim.keymap.set("n", "[E", function()
-  require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
-vim.keymap.set("n", "]E", function()
-  require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
+-- vim.keymap.set("n", "[E", function()
+--   require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+-- end, { silent = true })
+-- vim.keymap.set("n", "]E", function()
+--   require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+-- end, { silent = true })
 
 -- Outline
 --[[ vim.keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true }) ]]
@@ -595,12 +446,12 @@ end, { silent = true })
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 
 -- Float terminal
-vim.keymap.set("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
+-- vim.keymap.set("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
 -- if you want pass somc cli command into terminal you can do like this
 -- open lazygit in lspsaga float terminal
-vim.keymap.set("n", "<A-d>", "<cmd>Lspsaga open_floaterm lazygit<CR>", { silent = true })
+-- vim.keymap.set("n", "<A-d>", "<cmd>Lspsaga open_floaterm lazygit<CR>", { silent = true })
 -- close floaterm
-vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+-- vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
 
 -- vim.keymap.set("n", "<space>ts", require("telescope").extensions.toggletasks.spawn, { desc = "toggletasks: spawn" })
 
@@ -687,3 +538,8 @@ vim.api.nvim_set_keymap("n", "<leader><tab>h", "<cmd>tabprevious<cr>", { desc = 
 --       M._keys[#M._keys + 1] = { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
 --     end
 --   end
+vim.keymap.set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opt)
+vim.keymap.set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opt)
+
+vim.keymap.set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opt)
+vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opt)

@@ -2,58 +2,58 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 --
-vim.g.mapleader = " "
-vim.opt.showtabline = 2
+-- vim.g.mapleader = " "
+-- vim.opt.showtabline = 2
 vim.opt.scrolloff = 5
-vim.opt.mouse = "a"
-vim.opt.backupcopy = "yes"
-vim.opt.undolevels = 1000
-vim.opt.shortmess:append({ c = true, S = true })
-vim.opt.showmode = false
-vim.opt.hidden = true
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-vim.opt.wrapscan = true
-vim.opt.backup = false
-vim.opt.writebackup = false
-vim.opt.showcmd = true
-vim.opt.showmatch = true
-vim.opt.ignorecase = true
-vim.opt.hlsearch = true
-vim.opt.smartcase = true
-vim.opt.errorbells = false
-vim.opt.joinspaces = false
-vim.opt.title = true
-vim.opt.lazyredraw = true
-vim.opt.encoding = "UTF-8"
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.clipboard = "unnamedplus"
-vim.opt.listchars = { tab = ">>>", trail = "·", precedes = "←", extends = "→", eol = "↲", nbsp = "␣" }
-vim.opt.laststatus = 3
-vim.opt.timeoutlen = 500
--- Buffer
--- vim.opt.fileformat = 'unix'
-vim.opt.tabstop = 2
--- vim.opt.spelllang = 'it'
-vim.opt.softtabstop = 2
-vim.opt.swapfile = false
-vim.opt.undofile = false
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
--- Window
+-- vim.opt.mouse = "a"
+-- vim.opt.backupcopy = "yes"
+-- vim.opt.undolevels = 1000
+-- vim.opt.shortmess:append({ c = true, S = true })
+-- vim.opt.showmode = false
+-- vim.opt.hidden = true
+-- vim.opt.splitright = true
+-- vim.opt.splitbelow = true
+-- vim.opt.wrapscan = true
+-- vim.opt.backup = false
+-- vim.opt.writebackup = false
+-- vim.opt.showcmd = true
+-- vim.opt.showmatch = true
+-- vim.opt.ignorecase = true
+-- vim.opt.hlsearch = true
+-- vim.opt.smartcase = true
+-- vim.opt.errorbells = false
+-- vim.opt.joinspaces = false
+-- vim.opt.title = true
+-- vim.opt.lazyredraw = false
+-- vim.opt.encoding = "UTF-8"
+-- vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- vim.opt.clipboard = "unnamedplus"
+-- vim.opt.listchars = { tab = ">>>", trail = "·", precedes = "←", extends = "→", eol = "↲", nbsp = "␣" }
+-- vim.opt.laststatus = 3
+-- vim.opt.timeoutlen = 500
+-- -- Buffer
+-- -- vim.opt.fileformat = 'unix'
+-- vim.opt.tabstop = 2
+-- -- vim.opt.spelllang = 'it'
+-- vim.opt.softtabstop = 2
+-- vim.opt.swapfile = false
+-- vim.opt.undofile = false
+-- vim.opt.expandtab = true
+-- vim.opt.shiftwidth = 2
+-- -- Window
 vim.opt.number = true
-vim.opt.colorcolumn = "+1"
-vim.opt.foldmethod = "indent"
-vim.opt.foldlevel = 1
-vim.opt.list = false
-vim.opt.foldnestmax = 10
-vim.opt.signcolumn = "yes"
+-- vim.opt.colorcolumn = "+1"
+-- vim.opt.foldmethod = "indent"
+-- vim.opt.foldlevel = 1
+-- vim.opt.list = false
+-- vim.opt.foldnestmax = 10
+-- vim.opt.signcolumn = "yes"
 vim.opt.relativenumber = false
-vim.opt.foldenable = false
-vim.opt.cursorline = true
-vim.opt.guifont = "JetBrains Mono:h14"
+-- vim.opt.foldenable = false
+-- vim.opt.cursorline = true
+-- vim.opt.guifont = "JetBrains Mono:h14"
 vim.opt.wrap = true
-
+--
 function NewNote()
   vim.ui.input({ prompt = "Name: ", relative = "editor" }, function(name)
     vim.api.nvim_command(":e ~/Notes/" .. name .. ".md")

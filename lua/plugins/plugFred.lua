@@ -13,11 +13,9 @@
 --   --  "folke/neoconf.nvim", config = lua_path("neoconf")
 --   -- })
 --   { "williamboman/mason.nvim", config = lua_path("mason") },
---   { "williamboman/mason-lspconfig.nvim", config = lua_path("mason-lspconfig") },
 --   { "jose-elias-alvarez/null-ls.nvim", config = lua_path("null_ls") },
 --   { "jayp0521/mason-null-ls.nvim", config = lua_path("mason_null_ls") },
 --   { "WhoIsSethDaniel/mason-tool-installer.nvim" },
---   { "neovim/nvim-lspconfig" },
 --   { "onsails/lspkind-nvim" },
 --   { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
 --
@@ -716,26 +714,30 @@ local disableVariable = false
 return {
   {
     "ggandor/leap.nvim",
-    enable = false,
-    keys = {
-      {
-        "e",
-        mode = { "n", "x", "o" },
-        function()
-          local current_window = vim.fn.win_getid()
-          require("leap").leap({ target_windows = { current_window } })
-        end,
-      },
-    },
-    config = function(_, opts)
-      local leap = require("leap")
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-      leap.add_default_mappings(true)
-      vim.keymap.del({ "x", "o" }, "x")
-      vim.keymap.del({ "x", "o" }, "X")
-    end,
+    enabled = false,
+    -- keys = {
+    --   {
+    --     "e",
+    --     mode = { "n", "x", "o" },
+    --     function()
+    --       local current_window = vim.fn.win_getid()
+    --       require("leap").leap({ target_windows = { current_window } })
+    --     end,
+    --   },
+    -- },
+    -- config = function(_, opts)
+    --   local leap = require("leap")
+    --   for k, v in pairs(opts) do
+    --     leap.opts[k] = v
+    --   end
+    --   leap.add_default_mappings(true)
+    --   vim.keymap.del({ "x", "o" }, "x")
+    --   vim.keymap.del({ "x", "o" }, "X")
+    -- end,
+  },
+  {
+    "ggandor/flit.nvim",
+    enabled = false,
   },
   {
     "kyazdani42/nvim-tree.lua",
@@ -746,7 +748,7 @@ return {
 
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enable = false,
+    enabled = false,
     keys = {
       {
         "<leader>e",
@@ -772,7 +774,149 @@ return {
       "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-calc",
       "onsails/lspkind-nvim",
+      "hrsh7th/cmp-cmdline",
     },
+    -- config = function()
+    --   local cmp = require("cmp")
+    --   local lspkind = require("lspkind")
+    --   local function border(hl_name)
+    --     return {
+    --       { "╭", hl_name },
+    --       { "─", hl_name },
+    --       { "╮", hl_name },
+    --       { "│", hl_name },
+    --       { "╯", hl_name },
+    --       { "─", hl_name },
+    --       { "╰", hl_name },
+    --       { "│", hl_name },
+    --     }
+    --   end
+    --
+    --   local cmp_window = require("cmp.utils.window")
+    --
+    --   cmp_window.info = function(self)
+    --     local info = self:info_()
+    --     info.scrollable = false
+    --     return info
+    --   end
+    --
+    --   cmp.setup({
+    --     window = {
+    --       completion = {
+    --         border = border("CmpBorder"),
+    --         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+    --       },
+    --       documentation = {
+    --         border = border("CmpDocBorder"),
+    --       },
+    --     },
+    --     snippet = {
+    --       expand = function(args)
+    --         require("luasnip").lsp_expand(args.body)
+    --       end,
+    --     },
+    --     mapping = {
+    --       ["<C-p>"] = cmp.mapping.select_prev_item(),
+    --       ["<C-n>"] = cmp.mapping.select_next_item(),
+    --       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    --       ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    --       ["<C-Space>"] = cmp.mapping.complete(),
+    --       ["<C-e>"] = cmp.mapping.close(),
+    --       ["<CR>"] = cmp.mapping.confirm({
+    --         behavior = cmp.ConfirmBehavior.Replace,
+    --         select = false,
+    --       }),
+    --       ["<Tab>"] = cmp.mapping(function(fallback)
+    --         if cmp.visible() then
+    --           cmp.select_next_item()
+    --         elseif require("luasnip").expand_or_jumpable() then
+    --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+    --         else
+    --           fallback()
+    --         end
+    --       end, {
+    --         "i",
+    --         "s",
+    --       }),
+    --       ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --         if cmp.visible() then
+    --           cmp.select_prev_item()
+    --         elseif require("luasnip").jumpable(-1) then
+    --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+    --         else
+    --           fallback()
+    --         end
+    --       end, {
+    --         "i",
+    --         "s",
+    --       }),
+    --     },
+    --     --[[ formatting = { ]]
+    --     --[[   format = lspkind.cmp_format({ ]]
+    --     --[[     mode = "symbol_text", ]]
+    --     --[[     maxwidth = 50, ]]
+    --     --[[     before = function(entry, vim_item) ]]
+    --     --[[       return vim_item ]]
+    --     --[[     end, ]]
+    --     --[[   }), ]]
+    --     --[[ }, ]]
+    --     sources = cmp.config.sources({
+    --       --[[ { name = "vsnip" }, ]]
+    --       { name = "luasnip" },
+    --       { name = "nvim_lsp" },
+    --       { name = "nvim_lua" },
+    --       { name = "path" },
+    --       { name = "calc" },
+    --       --[[ { name = "treesitter" }, ]]
+    --       { name = "tags" },
+    --       {
+    --         name = "dictionary",
+    --         keyword_length = 2,
+    --       },
+    --       {
+    --         name = "spell",
+    --         option = {
+    --           keep_all_entries = false,
+    --           enable_in_context = function()
+    --             return true
+    --           end,
+    --         },
+    --       },
+    --       -- { name = 'rg' },-- create big lag on big fortran file
+    --     }, {
+    --       {
+    --         name = "buffer",
+    --         option = {
+    --           get_bufnrs = function()
+    --             local buf = vim.api.nvim_get_current_buf()
+    --             local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+    --             if byte_size > 1024 * 1024 then -- 1 Megabyte max
+    --               return {}
+    --             end
+    --             return { buf }
+    --           end,
+    --         },
+    --       },
+    --     }),
+    --   })
+    --   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+    --   cmp.setup.cmdline("/", {
+    --     mapping = cmp.mapping.preset.cmdline(),
+    --     sources = {
+    --       { name = "buffer" },
+    --     },
+    --   })
+    --
+    --   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    --   cmp.setup.cmdline(":", {
+    --     mapping = cmp.mapping.preset.cmdline(),
+    --     sources = cmp.config.sources({
+    --       { name = "path" },
+    --     }, {
+    --       { name = "cmdline" },
+    --     }),
+    --   })
+    -- end,
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       local has_words_before = function()
@@ -783,30 +927,62 @@ return {
 
       local luasnip = require("luasnip")
       local cmp = require("cmp")
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        }),
+      })
+
+      opts.snippet = vim.tbl_extend("force", opts.mapping, {
+        expand = function(args)
+          require("luasnip").lsp_expand(args.body)
+        end,
+      })
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<CR>"] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = false,
+        }),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- they way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
+          elseif require("luasnip").expand_or_jumpable() then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, {
+          "i",
+          "s",
+        }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+          elseif require("luasnip").jumpable(-1) then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, {
+          "i",
+          "s",
+        }),
       })
       local lspkind = require("lspkind")
       opts.formatting = vim.tbl_extend("force", opts.formatting, {
@@ -814,7 +990,6 @@ return {
           -- mode = "symbol", -- show only symbol annotations
           maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 wilvim.tbl_extend("force", l not show more than 50 characters)
           ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-
           -- The function below will be called before any actual modifications from lspkind
           -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
           -- before = function (entry, vim_item)
@@ -849,7 +1024,7 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    disable = disableVariable,
+    enabled = disableVariable,
     event = "BufRead",
   },
   { "tpope/vim-fugitive" },
@@ -879,7 +1054,7 @@ return {
   },
   {
     "andymass/vim-matchup",
-    disable = disableVariable,
+    enabled = disableVariable,
     -- tag = "*",
     -- event = "CursorMoved",
     -- config = function()
@@ -889,7 +1064,7 @@ return {
   {
     "simrat39/symbols-outline.nvim",
     -- tag = "*",
-    disable = disableVariable,
+    enabled = disableVariable,
     cmd = "SymbolsOutline",
     config = function()
       require("plugins.configs.symbols-outline")
@@ -899,13 +1074,13 @@ return {
   -- { "onsails/lspkind-nvim" },
 
   -- { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
-
-  {
-    "windwp/nvim-autopairs",
-    config = function()
-      require("plugins.configs.nvim-autopairs")
-    end,
-  },
+  -- { "echasnovski/mini.nvim", version = "*", disable = true },
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   config = function()
+  --     require("plugins.configs.nvim-autopairs")
+  --   end,
+  -- },
   {
     "windwp/nvim-ts-autotag",
     config = function()
@@ -915,7 +1090,7 @@ return {
   { "kevinhwang91/nvim-bqf" },
   {
     "npxbr/glow.nvim",
-    disable = disableVariable,
+    enabled = disableVariable,
     ft = { "markdown" },
     config = function()
       require("plugins.configs.glow")
@@ -923,7 +1098,7 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
-    disable = disableVariable,
+    enabled = disableVariable,
     run = "cd app && npm install",
     ft = "markdown",
     config = function()
@@ -932,7 +1107,7 @@ return {
   },
 
   { "ray-x/starry.nvim" },
-  { "simnalamburt/vim-mundo", disable = disableVariable },
+  { "simnalamburt/vim-mundo", enabled = disableVariable },
   {
     "rhysd/git-messenger.vim",
     disable = disableVariable,
@@ -943,17 +1118,17 @@ return {
       vim.api.nvim_command("let g:git_messenger_always_into_popup=v:true")
     end,
   },
-  { "xolox/vim-colorscheme-switcher", disable = disableVariable, dependencies = { "xolox/vim-misc" } },
+  { "xolox/vim-colorscheme-switcher", enabled = disableVariable, dependencies = { "xolox/vim-misc" } },
   {
     "rhysd/devdocs.vim",
-    disable = disableVariable,
+    enabled = disableVariable,
     config = function()
       vim.cmd([[let g:devdocs_filetype_map = {'c': 'c'} ]])
     end,
   },
   {
     "mzlogin/vim-markdown-toc",
-    disable = disableVariable,
+    enabled = disableVariable,
   },
   {
     "glacambre/firenvim",
@@ -997,72 +1172,74 @@ return {
     end,
   },
   {
-    "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
-  },
+    --   "kylechui/nvim-surround",
+    --   config = function()
+    --     require("nvim-surround").setup({
+    --       -- Configuration here, or leave empty to use defaults
+    --     })
+    --   end,
+    -- },
 
-  {
-    "renerocksai/telekasten.nvim",
-    config = function()
-      require("plugins.configs.telekasten")
-    end,
-  },
-  {
-    "max397574/better-escape.nvim",
-    config = function()
-      require("better_escape").setup()
-    end,
-  },
-
-  { "tibabit/vim-templates" },
-
-  { "numtostr/BufOnly.nvim", cmd = "BufOnly" },
-
-  {
-    "Civitasv/cmake-tools.nvim",
-    config = function()
-      require("plugins.configs.cmakeTool")
-    end,
-  },
-  {
-    "dnlhc/glance.nvim",
-    config = function()
-      require("glance").setup({
-        -- your configuration
-      })
-    end,
-  },
-  {
-    "mcchrish/zenbones.nvim",
-    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-    -- In Vim, compat mode is turned on as Lush only works in Neovim.
-    requires = "rktjmp/lush.nvim",
-  },
-  {
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+    {
+      "renerocksai/telekasten.nvim",
+      config = function()
+        require("plugins.configs.telekasten")
+      end,
     },
-    config = function()
-      require("plugins.configs.neotest")
-    end,
-  },
-  {
-    "nvim-neotest/neotest-vim-test",
-    config = function()
-      require("plugins.configs.neotest-vim-test")
-    end,
-  },
-  {
-    "telescope.nvim",
-    dependencies = {
-      "ahmedkhalf/project.nvim",
+    {
+      "max397574/better-escape.nvim",
+      config = function()
+        require("better_escape").setup()
+      end,
+    },
+
+    { "tibabit/vim-templates" },
+
+    { "numtostr/BufOnly.nvim", cmd = "BufOnly" },
+
+    {
+      "Civitasv/cmake-tools.nvim",
+      config = function()
+        require("plugins.configs.cmakeTool")
+      end,
+    },
+    {
+      "dnlhc/glance.nvim",
+      config = function()
+        require("glance").setup({
+          -- your configuration
+        })
+      end,
+    },
+    {
+      "mcchrish/zenbones.nvim",
+      -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+      -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+      -- In Vim, compat mode is turned on as Lush only works in Neovim.
+      requires = "rktjmp/lush.nvim",
+    },
+    {
+      "nvim-neotest/neotest",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+      },
+      config = function()
+        require("plugins.configs.neotest")
+      end,
+    },
+    {
+      "nvim-neotest/neotest-vim-test",
+      config = function()
+        require("plugins.configs.neotest-vim-test")
+      end,
+    },
+    {
+      "telescope.nvim",
+      dependencies = {
+        "ahmedkhalf/project.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim",
+      },
       config = function()
         require("plugins.configs.project")
         require("telescope").load_extension("projects")
@@ -1070,35 +1247,71 @@ return {
       end,
     },
   },
+  -- {
+  --   "glepnir/lspsaga.nvim",
+  --   branch = "main",
+  --   dependencies = {
+  --     { "nvim-tree/nvim-web-devicons" },
+  --     --Please make sure you install markdown and markdown_inline parser
+  --     { "nvim-treesitter/nvim-treesitter" },
+  --   },
+  -- },
+  -- {
+  --   "Shatur/neovim-cmake",
+  --   enabled = disableVariable,
+  --   config = function()
+  --     local Path = require("plenary.path")
+  --     require("cmake").setup({
+  --       cmake_executable = "cmake", -- CMake executable to run.
+  --       parameters_file = "neovim.json", -- JSON file to store information about selected target, run arguments and build type.
+  --       -- build_dir = tostring(Path:new('{cwd}', 'build', '{os}-{build_type}')), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values.
+  --       build_dir = tostring(Path:new("{cwd}", "build")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values.
+  --       -- samples_path = tostring(script_path:parent():parent():parent() / 'samples'), -- Folder with samples. `samples` folder from the plugin directory is used by default.
+  --       default_projects_path = tostring(Path:new(vim.loop.os_homedir(), "Projects")), -- Default folder for creating project.
+  --       configure_args = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- Default arguments that will be always passed at cmake configure step. By default tells cmake to generate `compile_commands.json`.
+  --       build_args = {}, -- Default arguments that will be always passed at cmake build step.
+  --       on_build_output = nil, -- Callback which will be called on every line that is printed during build process. Accepts printed line as argument.
+  --       quickfix_height = 10, -- Height of the opened quickfix.
+  --       -- quickfix_only_on_error = true, -- Open quickfix window only if target build failed.
+  --       dap_configuration = { type = "cpp", request = "launch" }, -- DAP configuration. By default configured to work with `lldb-vscode`.
+  --       dap_open_command = require("dap").repl.open, -- Command to run after starting DAP session. You can set it to `false` if you don't want to open anything or `require('dapui').open` if you are using https://github.com/rcarriga/nvim-dap-ui
+  --     })
+  --   end,
+  -- },
   {
-    "glepnir/lspsaga.nvim",
-    branch = "main",
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-      --Please make sure you install markdown and markdown_inline parser
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-  },
-  {
-    "Shatur/neovim-cmake",
-    disable = disableVariable,
+    "mrjones2014/nvim-ts-rainbow",
     config = function()
-      local Path = require("plenary.path")
-      require("cmake").setup({
-        cmake_executable = "cmake", -- CMake executable to run.
-        parameters_file = "neovim.json", -- JSON file to store information about selected target, run arguments and build type.
-        -- build_dir = tostring(Path:new('{cwd}', 'build', '{os}-{build_type}')), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values.
-        build_dir = tostring(Path:new("{cwd}", "build")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values.
-        -- samples_path = tostring(script_path:parent():parent():parent() / 'samples'), -- Folder with samples. `samples` folder from the plugin directory is used by default.
-        default_projects_path = tostring(Path:new(vim.loop.os_homedir(), "Projects")), -- Default folder for creating project.
-        configure_args = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- Default arguments that will be always passed at cmake configure step. By default tells cmake to generate `compile_commands.json`.
-        build_args = {}, -- Default arguments that will be always passed at cmake build step.
-        on_build_output = nil, -- Callback which will be called on every line that is printed during build process. Accepts printed line as argument.
-        quickfix_height = 10, -- Height of the opened quickfix.
-        -- quickfix_only_on_error = true, -- Open quickfix window only if target build failed.
-        dap_configuration = { type = "cpp", request = "launch" }, -- DAP configuration. By default configured to work with `lldb-vscode`.
-        dap_open_command = require("dap").repl.open, -- Command to run after starting DAP session. You can set it to `false` if you don't want to open anything or `require('dapui').open` if you are using https://github.com/rcarriga/nvim-dap-ui
-      })
+      require("plugins.configs.nvim-ts-rainbow")
     end,
   },
+  {
+    "voldikss/vim-translator",
+    enabled = disableVariable,
+    config = function()
+      vim.api.nvim_set_var("translator_target_lang", "fr")
+      vim.api.nvim_set_var("translator_source_lang", "en")
+      vim.api.nvim_set_var("translator_proxy_url", "http://proxy.onera:80")
+    end,
+  },
+  { "p00f/clangd_extensions.nvim" },
+  {
+    "rmagatti/goto-preview",
+    config = function()
+      require("goto-preview").setup({})
+    end,
+  },
+  { "Darazaki/indent-o-matic" },
+  { "renerocksai/calendar-vim" },
+  { "joechrisellis/lsp-format-modifications.nvim" },
+  { "lewis6991/nvim-treesitter-context" },
+  { "skywind3000/asyncrun.vim", tag = "*", disable = disableVariable },
+  { "skywind3000/asynctasks.vim", disable = disableVariable },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("plugins.configs.mason-lspconfig")
+    end,
+  },
+  { "neovim/nvim-lspconfig" },
 }
