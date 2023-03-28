@@ -710,7 +710,7 @@
 -- }
 --
 -- SPECIAL lazyvim
-local disableVariable = false
+local disableVariable = true
 return {
   {
     "ggandor/leap.nvim",
@@ -776,163 +776,272 @@ return {
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
     },
-    -- config = function()
-    --   local cmp = require("cmp")
-    --   local lspkind = require("lspkind")
-    --   local function border(hl_name)
-    --     return {
-    --       { "╭", hl_name },
-    --       { "─", hl_name },
-    --       { "╮", hl_name },
-    --       { "│", hl_name },
-    --       { "╯", hl_name },
-    --       { "─", hl_name },
-    --       { "╰", hl_name },
-    --       { "│", hl_name },
-    --     }
-    --   end
-    --
-    --   local cmp_window = require("cmp.utils.window")
-    --
-    --   cmp_window.info = function(self)
-    --     local info = self:info_()
-    --     info.scrollable = false
-    --     return info
-    --   end
-    --
-    --   cmp.setup({
-    --     window = {
-    --       completion = {
-    --         border = border("CmpBorder"),
-    --         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-    --       },
-    --       documentation = {
-    --         border = border("CmpDocBorder"),
-    --       },
-    --     },
-    --     snippet = {
-    --       expand = function(args)
-    --         require("luasnip").lsp_expand(args.body)
-    --       end,
-    --     },
-    --     mapping = {
-    --       ["<C-p>"] = cmp.mapping.select_prev_item(),
-    --       ["<C-n>"] = cmp.mapping.select_next_item(),
-    --       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    --       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    --       ["<C-Space>"] = cmp.mapping.complete(),
-    --       ["<C-e>"] = cmp.mapping.close(),
-    --       ["<CR>"] = cmp.mapping.confirm({
-    --         behavior = cmp.ConfirmBehavior.Replace,
-    --         select = false,
-    --       }),
-    --       ["<Tab>"] = cmp.mapping(function(fallback)
-    --         if cmp.visible() then
-    --           cmp.select_next_item()
-    --         elseif require("luasnip").expand_or_jumpable() then
-    --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-    --         else
-    --           fallback()
-    --         end
-    --       end, {
-    --         "i",
-    --         "s",
-    --       }),
-    --       ["<S-Tab>"] = cmp.mapping(function(fallback)
-    --         if cmp.visible() then
-    --           cmp.select_prev_item()
-    --         elseif require("luasnip").jumpable(-1) then
-    --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-    --         else
-    --           fallback()
-    --         end
-    --       end, {
-    --         "i",
-    --         "s",
-    --       }),
-    --     },
-    --     --[[ formatting = { ]]
-    --     --[[   format = lspkind.cmp_format({ ]]
-    --     --[[     mode = "symbol_text", ]]
-    --     --[[     maxwidth = 50, ]]
-    --     --[[     before = function(entry, vim_item) ]]
-    --     --[[       return vim_item ]]
-    --     --[[     end, ]]
-    --     --[[   }), ]]
-    --     --[[ }, ]]
-    --     sources = cmp.config.sources({
-    --       --[[ { name = "vsnip" }, ]]
-    --       { name = "luasnip" },
-    --       { name = "nvim_lsp" },
-    --       { name = "nvim_lua" },
-    --       { name = "path" },
-    --       { name = "calc" },
-    --       --[[ { name = "treesitter" }, ]]
-    --       { name = "tags" },
-    --       {
-    --         name = "dictionary",
-    --         keyword_length = 2,
-    --       },
-    --       {
-    --         name = "spell",
-    --         option = {
-    --           keep_all_entries = false,
-    --           enable_in_context = function()
-    --             return true
-    --           end,
-    --         },
-    --       },
-    --       -- { name = 'rg' },-- create big lag on big fortran file
-    --     }, {
-    --       {
-    --         name = "buffer",
-    --         option = {
-    --           get_bufnrs = function()
-    --             local buf = vim.api.nvim_get_current_buf()
-    --             local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-    --             if byte_size > 1024 * 1024 then -- 1 Megabyte max
-    --               return {}
-    --             end
-    --             return { buf }
-    --           end,
-    --         },
-    --       },
-    --     }),
-    --   })
-    --   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    --   cmp.setup.cmdline("/", {
-    --     mapping = cmp.mapping.preset.cmdline(),
-    --     sources = {
-    --       { name = "buffer" },
-    --     },
-    --   })
-    --
-    --   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    --   cmp.setup.cmdline(":", {
-    --     mapping = cmp.mapping.preset.cmdline(),
-    --     sources = cmp.config.sources({
-    --       { name = "path" },
-    --     }, {
-    --       { name = "cmdline" },
-    --     }),
-    --   })
-    -- end,
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    config = function()
+      --   local cmp = require("cmp")
+      --   local lspkind = require("lspkind")
+      --   local function border(hl_name)
+      --     return {
+      --       { "╭", hl_name },
+      --       { "─", hl_name },
+      --       { "╮", hl_name },
+      --       { "│", hl_name },
+      --       { "╯", hl_name },
+      --       { "─", hl_name },
+      --       { "╰", hl_name },
+      --       { "│", hl_name },
+      --     }
+      --   end
+      --
+      --   local cmp_window = require("cmp.utils.window")
+      --
+      --   cmp_window.info = function(self)
+      --     local info = self:info_()
+      --     info.scrollable = false
+      --     return info
+      --   end
+      --
+      --   cmp.setup({
+      --     window = {
+      --       completion = {
+      --         border = border("CmpBorder"),
+      --         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      --       },
+      --       documentation = {
+      --         border = border("CmpDocBorder"),
+      --       },
+      --     },
+      --     snippet = {
+      --       expand = function(args)
+      --         require("luasnip").lsp_expand(args.body)
+      --       end,
+      --     },
+      --     mapping = {
+      --       ["<C-p>"] = cmp.mapping.select_prev_item(),
+      --       ["<C-n>"] = cmp.mapping.select_next_item(),
+      --       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      --       ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      --       ["<C-Space>"] = cmp.mapping.complete(),
+      --       ["<C-e>"] = cmp.mapping.close(),
+      --       ["<CR>"] = cmp.mapping.confirm({
+      --         behavior = cmp.ConfirmBehavior.Replace,
+      --         select = false,
+      --       }),
+      --       ["<Tab>"] = cmp.mapping(function(fallback)
+      --         if cmp.visible() then
+      --           cmp.select_next_item()
+      --         elseif require("luasnip").expand_or_jumpable() then
+      --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+      --         else
+      --           fallback()
+      --         end
+      --       end, {
+      --         "i",
+      --         "s",
+      --       }),
+      --       ["<S-Tab>"] = cmp.mapping(function(fallback)
+      --         if cmp.visible() then
+      --           cmp.select_prev_item()
+      --         elseif require("luasnip").jumpable(-1) then
+      --           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+      --         else
+      --           fallback()
+      --         end
+      --       end, {
+      --         "i",
+      --         "s",
+      --       }),
+      --     },
+      --     --[[ formatting = { ]]
+      --     --[[   format = lspkind.cmp_format({ ]]
+      --     --[[     mode = "symbol_text", ]]
+      --     --[[     maxwidth = 50, ]]
+      --     --[[     before = function(entry, vim_item) ]]
+      --     --[[       return vim_item ]]
+      --     --[[     end, ]]
+      --     --[[   }), ]]
+      --     --[[ }, ]]
+      --     sources = cmp.config.sources({
+      --       --[[ { name = "vsnip" }, ]]
+      --       { name = "luasnip" },
+      --       { name = "nvim_lsp" },
+      --       { name = "nvim_lua" },
+      --       { name = "path" },
+      --       { name = "calc" },
+      --       --[[ { name = "treesitter" }, ]]
+      --       { name = "tags" },
+      --       {
+      --         name = "dictionary",
+      --         keyword_length = 2,
+      --       },
+      --       {
+      --         name = "spell",
+      --         option = {
+      --           keep_all_entries = false,
+      --           enable_in_context = function()
+      --             return true
+      --           end,
+      --         },
+      --       },
+      --       -- { name = 'rg' },-- create big lag on big fortran file
+      --     }, {
+      --       {
+      --         name = "buffer",
+      --         option = {
+      --           get_bufnrs = function()
+      --             local buf = vim.api.nvim_get_current_buf()
+      --             local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+      --             if byte_size > 1024 * 1024 then -- 1 Megabyte max
+      --               return {}
+      --             end
+      --             return { buf }
+      --           end,
+      --         },
+      --       },
+      --     }),
+      --   })
+      --   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+      --   cmp.setup.cmdline("/", {
+      --     mapping = cmp.mapping.preset.cmdline(),
+      --     sources = {
+      --       { name = "buffer" },
+      --     },
+      --   })
+      --
+      --   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      --   cmp.setup.cmdline(":", {
+      --     mapping = cmp.mapping.preset.cmdline(),
+      --     sources = cmp.config.sources({
+      --       { name = "path" },
+      --     }, {
+      --       { name = "cmdline" },
+      --     }),
+      --   })
+      -- end,
+      ---@param opts cmp.ConfigSchema
+      -- opts = function(_, opts)
+      local cmp = require("cmp")
+      local lspkind = require("lspkind")
+      local function border(hl_name)
+        return {
+          { "╭", hl_name },
+          { "─", hl_name },
+          { "╮", hl_name },
+          { "│", hl_name },
+          { "╯", hl_name },
+          { "─", hl_name },
+          { "╰", hl_name },
+          { "│", hl_name },
+        }
       end
 
-      local luasnip = require("luasnip")
-      local cmp = require("cmp")
+      cmp.setup({
+        window = {
+          completion = {
+            border = border("CmpBorder"),
+            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+          },
+          documentation = {
+            border = border("CmpDocBorder"),
+          },
+        },
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        mapping = {
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<CR>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false,
+          }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif require("luasnip").expand_or_jumpable() then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            else
+              fallback()
+            end
+          end, {
+            "i",
+            "s",
+          }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif require("luasnip").jumpable(-1) then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+            else
+              fallback()
+            end
+          end, {
+            "i",
+            "s",
+          }),
+        },
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = "symbol_text",
+            maxwidth = 50,
+            -- before = function(entry, vim_item)
+            --   return vim_item
+            -- end,
+          }),
+        },
+        sources = cmp.config.sources({
+          --[[ { name = "vsnip" }, ]]
+          { name = "luasnip" },
+          { name = "nvim_lsp" },
+          { name = "nvim_lua" },
+          { name = "path" },
+          { name = "calc" },
+          --[[ { name = "treesitter" }, ]]
+          { name = "tags" },
+          {
+            name = "dictionary",
+            keyword_length = 2,
+          },
+          {
+            name = "spell",
+            option = {
+              keep_all_entries = false,
+              enable_in_context = function()
+                return true
+              end,
+            },
+          },
+          -- { name = 'rg' },-- create big lag on big fortran file
+        }, {
+          {
+            name = "buffer",
+            option = {
+              get_bufnrs = function()
+                local buf = vim.api.nvim_get_current_buf()
+                local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                if byte_size > 1024 * 1024 then -- 1 Megabyte max
+                  return {}
+                end
+                return { buf }
+              end,
+            },
+          },
+        }),
+      })
+      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = "buffer" },
         },
       })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
@@ -941,64 +1050,87 @@ return {
           { name = "cmdline" },
         }),
       })
-
-      opts.snippet = vim.tbl_extend("force", opts.mapping, {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body)
-        end,
-      })
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false,
-        }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif require("luasnip").expand_or_jumpable() then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif require("luasnip").jumpable(-1) then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-      })
-      local lspkind = require("lspkind")
-      opts.formatting = vim.tbl_extend("force", opts.formatting, {
-        format = lspkind.cmp_format({
-          -- mode = "symbol", -- show only symbol annotations
-          maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 wilvim.tbl_extend("force", l not show more than 50 characters)
-          ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-          -- The function below will be called before any actual modifications from lspkind
-          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-          -- before = function (entry, vim_item)
-          --   ...
-          --   return vim_item
-          -- end
-        }),
-      })
     end,
+    --   local has_words_before = function()
+    --     unpack = unpack or table.unpack
+    --     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    --     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    --   end
+    --
+    --   local luasnip = require("luasnip")
+    --   local cmp = require("cmp")
+    --   cmp.setup.cmdline("/", {
+    --     mapping = cmp.mapping.preset.cmdline(),
+    --     sources = {
+    --       { name = "buffer" },
+    --     },
+    --   })
+    --   cmp.setup.cmdline(":", {
+    --     mapping = cmp.mapping.preset.cmdline(),
+    --     sources = cmp.config.sources({
+    --       { name = "path" },
+    --     }, {
+    --       { name = "cmdline" },
+    --     }),
+    --   })
+    --
+    --   opts.snippet = vim.tbl_extend("force", opts.mapping, {
+    --     expand = function(args)
+    --       require("luasnip").lsp_expand(args.body)
+    --     end,
+    --   })
+    --
+    --   opts.mapping = vim.tbl_extend("force", opts.mapping, {
+    --     ["<C-p>"] = cmp.mapping.select_prev_item(),
+    --     ["<C-n>"] = cmp.mapping.select_next_item(),
+    --     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    --     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    --     ["<C-Space>"] = cmp.mapping.complete(),
+    --     ["<C-e>"] = cmp.mapping.close(),
+    --     ["<CR>"] = cmp.mapping.confirm({
+    --       behavior = cmp.ConfirmBehavior.Replace,
+    --       select = false,
+    --     }),
+    --     ["<Tab>"] = cmp.mapping(function(fallback)
+    --       if cmp.visible() then
+    --         cmp.select_next_item()
+    --       elseif require("luasnip").expand_or_jumpable() then
+    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+    --       else
+    --         fallback()
+    --       end
+    --     end, {
+    --       "i",
+    --       "s",
+    --     }),
+    --     ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --       if cmp.visible() then
+    --         cmp.select_prev_item()
+    --       elseif require("luasnip").jumpable(-1) then
+    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+    --       else
+    --         fallback()
+    --       end
+    --     end, {
+    --       "i",
+    --       "s",
+    --     }),
+    --   })
+    --   local lspkind = require("lspkind")
+    --   opts.formatting = vim.tbl_extend("force", opts.formatting, {
+    --     format = lspkind.cmp_format({
+    --       -- mode = "symbol", -- show only symbol annotations
+    --       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 wilvim.tbl_extend("force", l not show more than 50 characters)
+    --       ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+    --       -- The function below will be called before any actual modifications from lspkind
+    --       -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+    --       -- before = function (entry, vim_item)
+    --       --   ...
+    --       --   return vim_item
+    --       -- end
+    --     }),
+    --   })
+    -- end,
   },
 
   { import = "lazyvim.plugins.extras.lang.json" },
@@ -1025,7 +1157,7 @@ return {
   {
     "sindrets/diffview.nvim",
     enabled = disableVariable,
-    event = "BufRead",
+    -- event = "BufRead",
   },
   { "tpope/vim-fugitive" },
   {
@@ -1075,12 +1207,16 @@ return {
 
   -- { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
   -- { "echasnovski/mini.nvim", version = "*", disable = true },
-  -- {
-  --   "windwp/nvim-autopairs",
-  --   config = function()
-  --     require("plugins.configs.nvim-autopairs")
-  --   end,
-  -- },
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+  },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("plugins.configs.nvim-autopairs")
+    end,
+  },
   {
     "windwp/nvim-ts-autotag",
     config = function()
@@ -1106,7 +1242,14 @@ return {
     end,
   },
 
-  { "ray-x/starry.nvim" },
+  {
+    "ray-x/starry.nvim",
+    opts = function()
+      vim.g.starry_style = "marianna"
+      -- require("starry").setup()
+    end,
+    -- keys = { "<F2>" },
+  },
   { "simnalamburt/vim-mundo", enabled = disableVariable },
   {
     "rhysd/git-messenger.vim",
@@ -1314,4 +1457,46 @@ return {
     end,
   },
   { "neovim/nvim-lspconfig" },
+
+  {
+    "tamago324/nlsp-settings.nvim",
+    config = function()
+      require("plugins.configs.nlsp_setting")
+    end,
+  },
+  {
+    "Shatur/neovim-tasks",
+    config = function()
+      local Path = require("plenary.path")
+      require("tasks").setup({
+        default_params = { -- Default module parameters with which `neovim.json` will be created.
+          cmake = {
+            cmd = "cmake", -- CMake executable to use, can be changed using `:Task set_module_param cmake cmd`.
+            build_dir = tostring(Path:new("{cwd}", "build")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values. Could be a function that return the path to the build directory.
+            build_type = "Debug", -- Build type, can be changed using `:Task set_module_param cmake build_type`.
+            dap_name = "lldb", -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
+            args = { -- Task default arguments.
+              configure = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
+            },
+          },
+        },
+        save_before_run = false, -- If true, all files will be saved before executing a task.
+        params_file = "neovim.json", -- JSON file to store module and task parameters.
+        quickfix = {
+          pos = "botright", -- Default quickfix position.
+          height = 12, -- Default height.
+        },
+        dap_open_command = function()
+          return require("dap").repl.open()
+        end, --
+      })
+    end,
+  },
+
+  {
+    "williamboman/mason.nvim",
+    opts = function()
+      require("plugins.configs.mason")
+    end,
+  },
 }

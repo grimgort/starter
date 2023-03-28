@@ -3,6 +3,14 @@
 -- Add any additional keymaps here
 --
 --
+-- local wk = require("which-key")
+-- -- wk.register({ f = {} }, {})
+-- local function deregister(prefix, lhs, mode)
+--   pcall(wk.register, { [lhs] = "which_key_ignore" }, { prefix = prefix })
+--   pcall(vim.api.nvim_del_keymap, mode or "n", prefix .. lhs)
+-- end
+--
+-- deregister("<leader>", "f")
 -- <F2> help
 -- <F2> vim-codepainter
 -- <F3> vim-codepainter navigate
@@ -212,8 +220,13 @@ vim.keymap.set(
 )
 
 local opt = {}
-vim.keymap.set("n", "<F7>", ":CMakeBuild --config Debug -j4<cr>", opt)
-vim.keymap.set("n", "<F6>", ":CMakeBuild --config Release -j4<cr>", opt)
+-- vim.keymap.set("n", "<F7>", ":CMakeBuild <cr>", opt)
+vim.keymap.set("n", "<F8>", ":CMakeBuild <cr>", opt)
+vim.keymap.set("n", "<F6>", ":Task start cmake build_all -j10 --config Release<cr>", opt)
+vim.keymap.set("n", "<F7>", ":Task start cmake build_all -j10 <cr>", opt)
+
+-- vim.keymap.set("n", "<F6>", ":AsyncRun cmake --build build --config Release -j10<cr>", opt)
+-- vim.keymap.set("n", "<F7>", ":AsyncRun cmake --build build --config Debug -j10<cr>", opt)
 vim.keymap.set("n", "<F5>", ':AsyncRun pwsh -Command "frintelcompile"<cr>', opt)
 vim.keymap.set("v", "*", [[y/\V<C-r>=escape(@",'/\')<CR><CR>]], {})
 -- vim.keymap.set("n", "<C-!>", ":%s/", opt)
@@ -540,6 +553,8 @@ vim.api.nvim_set_keymap("n", "<leader><tab>h", "<cmd>tabprevious<cr>", { desc = 
 --   end
 vim.keymap.set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opt)
 vim.keymap.set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opt)
-
 vim.keymap.set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opt)
 vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opt)
+
+-- vim.keymap.set("n", "<F2>", "<cmd>:lua require('starry.functions').toggle_style()<CR>")
+-- vim.keymap.set("n", "<F3>", "<cmd>:Starry<CR>")
