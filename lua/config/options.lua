@@ -5,6 +5,7 @@
 -- vim.g.mapleader = " "
 -- vim.opt.showtabline = 2
 vim.opt.scrolloff = 5
+vim.b.autoformat = false
 -- vim.opt.mouse = "a"
 -- vim.opt.backupcopy = "yes"
 -- vim.opt.undolevels = 1000
@@ -36,7 +37,7 @@ vim.opt.scrolloff = 5
 -- vim.opt.tabstop = 2
 -- -- vim.opt.spelllang = 'it'
 -- vim.opt.softtabstop = 2
--- vim.opt.swapfile = false
+vim.opt.swapfile = false
 -- vim.opt.undofile = false
 -- vim.opt.expandtab = true
 -- vim.opt.shiftwidth = 2
@@ -51,14 +52,14 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 -- vim.opt.foldenable = false
 -- vim.opt.cursorline = true
--- vim.opt.guifont = "JetBrains Mono:h14"
+vim.opt.guifont = "JetBrains Mono:h13"
 vim.opt.wrap = true
 --
-function NewNote()
-  vim.ui.input({ prompt = "Name: ", relative = "editor" }, function(name)
-    vim.api.nvim_command(":e ~/Notes/" .. name .. ".md")
-  end)
-end
+-- function NewNote()
+--   vim.ui.input({ prompt = "Name: ", relative = "editor" }, function(name)
+--     vim.api.nvim_command(":e ~/Notes/" .. name .. ".md")
+--   end)
+-- end
 
 vim.cmd([[
 nnoremap << >>
@@ -230,10 +231,13 @@ function QuitAllLua()
   vim.cmd("NvimTreeClose")
   vim.cmd("DiffviewClose")
   vim.cmd("nohlsearch")
-  --[[ vim.cmd("SymbolsOutlineClose") ]]
+  vim.cmd("TroubleClose")
+  -- vim.cmd("SymbolsOutlineClose")
   --[[ vim.cmd("Lspsaga close_floaterm") ]]
   require("FTerm").close()
   --[[ :pclose ]]
   --[[   helpclose ]]
   --[[   ccl ]]
+  require("goto-preview").close_all_win()
+  require("notify").dismiss({ silent = true, pending = true })
 end

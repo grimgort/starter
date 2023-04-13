@@ -767,6 +767,22 @@ return {
       return {}
     end,
   },
+  {
+    "rcarriga/cmp-dap",
+    config = function()
+      require("cmp").setup({
+        enabled = function()
+          return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+        end,
+      })
+
+      require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+        sources = {
+          { name = "dap" },
+        },
+      })
+    end,
+  },
   -- then: setup supertab in cmp
   {
     "hrsh7th/nvim-cmp",
@@ -775,6 +791,7 @@ return {
       "hrsh7th/cmp-calc",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
+      "rcarriga/cmp-dap"
     },
     config = function()
       --   local cmp = require("cmp")
@@ -1177,6 +1194,7 @@ return {
     config = function()
       require("plugins.configs.nvim-dap-virtual-text")
     end,
+    dependencies = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
@@ -1387,18 +1405,22 @@ return {
         require("plugins.configs.project")
         require("telescope").load_extension("projects")
         -- require("telescope").extensions.projects.projects({})
+        require("plugins.configs.telescope")
       end,
     },
   },
-  -- {
-  --   "glepnir/lspsaga.nvim",
-  --   branch = "main",
-  --   dependencies = {
-  --     { "nvim-tree/nvim-web-devicons" },
-  --     --Please make sure you install markdown and markdown_inline parser
-  --     { "nvim-treesitter/nvim-treesitter" },
-  --   },
-  -- },
+  {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      require("lspsaga").setup({})
+    end,
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+      --Please make sure you install markdown and markdown_inline parser
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+  },
   -- {
   --   "Shatur/neovim-cmake",
   --   enabled = disableVariable,
@@ -1445,16 +1467,33 @@ return {
   },
   { "Darazaki/indent-o-matic" },
   { "renerocksai/calendar-vim" },
-  { "joechrisellis/lsp-format-modifications.nvim" },
-  { "lewis6991/nvim-treesitter-context" },
-  { "skywind3000/asyncrun.vim", tag = "*", disable = disableVariable },
+  -- { "joechrisellis/lsp-format-modifications.nvim", dependencies = { "neovim/nvim-lspconfig" } },
+  { "wellle/context.vim" },
+  -- {
+  --   "lewis6991/nvim-treesitter-context",
+  --   config = function()
+  --     require("plugins.configs.nvim-treesitter-context")
+  --   end,
+  -- },
+  { "skywind3000/asyncrun.vim",   disable = disableVariable },
   { "skywind3000/asynctasks.vim", disable = disableVariable },
-
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "joechrisellis/lsp-format-modifications.nvim",
+      init = function()
+        require("lazyvim.util").on_attach(function(client, bufnr)
+          local lsp_format_modifications = require("lsp-format-modifications")
+          lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+        end)
+      end,
+    },
+    opts = {
+      autoformat = false,
+    },
+  },
   {
     "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("plugins.configs.mason-lspconfig")
-    end,
   },
   { "neovim/nvim-lspconfig" },
 
@@ -1469,7 +1508,8 @@ return {
     config = function()
       local Path = require("plenary.path")
       require("tasks").setup({
-        default_params = { -- Default module parameters with which `neovim.json` will be created.
+        default_params = {
+          -- Default module parameters with which `neovim.json` will be created.
           cmake = {
             cmd = "cmake", -- CMake executable to use, can be changed using `:Task set_module_param cmake cmd`.
             build_dir = tostring(Path:new("{cwd}", "build")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values. Could be a function that return the path to the build directory.
@@ -1499,4 +1539,195 @@ return {
       require("plugins.configs.mason")
     end,
   },
+  { "shaeinst/roshnivim-cs" },
+  { "rafamadriz/neon" },
+  { "tomasiser/vim-code-dark" },
+  { "Mofiqul/vscode.nvim" },
+  { "marko-cerovac/material.nvim" },
+  { "bluz71/vim-nightfly-colors" },
+  { "bluz71/vim-moonfly-colors" },
+  { "ChristianChiarulli/nvcode-color-schemes.vim" },
+  { "folke/tokyonight.nvim" },
+  { "sainnhe/sonokai" },
+  { "nyoom-engineering/oxocarbon.nvim" },
+  { "kyazdani42/blue-moon" },
+  { "mhartington/oceanic-next" },
+  { "glepnir/zephyr-nvim" },
+  { "rockerBOO/boo-colorscheme-nvim" },
+  { "jim-at-jibba/ariake-vim-colors" },
+  { "Th3Whit3Wolf/onebuddy" },
+  { "ishan9299/modus-theme-vim" },
+  { "sainnhe/edge" },
+  { "theniceboy/nvim-deus" },
+  { "bkegley/gloombuddy" },
+  { "Th3Whit3Wolf/one-nvim" },
+  { "PHSix/nvim-hybrid" },
+  -- { "Th3Whit3Wolf/space-nvim" },
+  { "yonlu/omni.vim" },
+  { "ray-x/aurora" },
+  -- { "ray-x/starry.nvim" },
+  { "tanvirtin/monokai.nvim" },
+  { "ofirgall/ofirkai.nvim" },
+  { "savq/melange-nvim" },
+  { "RRethy/nvim-base16" },
+  { "fenetikm/falcon" },
+  { "andersevenrud/nordic.nvim" },
+  -- { "shaunsingh/nord.nvim" },
+  { "svrana/neosolarized.nvim" },
+  { "ishan9299/nvim-solarized-lua" },
+  { "shaunsingh/moonlight.nvim" },
+  { "navarasu/onedark.nvim" },
+  { "lourenci/github-colors" },
+  { "sainnhe/gruvbox-material" },
+  { "sainnhe/everforest" },
+  { "neanias/everforest-nvim" },
+  { "NTBBloodbath/doom-one.nvim" },
+  -- { "dracula/vim" },
+  { "Mofiqul/dracula.nvim" },
+  { "yashguptaz/calvera-dark.nvim" },
+  { "nxvu699134/vn-night.nvim" },
+  { "adisen99/codeschool.nvim" },
+  { "projekt0n/github-nvim-theme" },
+  { "kdheepak/monochrome.nvim" },
+  { "rose-pine/neovim" },
+  -- { "mcchrish/zenbones.nvim" },
+  { "catppuccin/nvim" },
+  { "FrenzyExists/aquarium-vim" },
+  { "EdenEast/nightfox.nvim" },
+  { "kvrohit/substrata.nvim" },
+  { "ldelossa/vimdark" },
+  { "Everblush/everblush.nvim" },
+  { "adisen99/apprentice.nvim" },
+  { "olimorris/onedarkpro.nvim" },
+  { "rmehri01/onenord.nvim" },
+  { "RishabhRD/gruvy" },
+  -- { "echasnovski/mini.minischeme" },
+  { "luisiacc/gruvbox-baby" },
+  { "titanzero/zephyrium" },
+  { "rebelot/kanagawa.nvim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "cpea2506/one_monokai.nvim" },
+  { "phha/zenburn.nvim" },
+  { "kvrohit/rasmus.nvim" },
+  { "chrsm/paramount-ng.nvim" },
+  { "kaiuri/nvim-juliana" },
+  { "lmburns/kimbox" },
+  { "rockyzhang24/arctic.nvim" },
+  { "ramojus/mellifluous.nvim" },
+  { "Yazeed1s/minimal.nvim" },
+  { "lewpoly/sherbet.nvim" },
+  { "Mofiqul/adwaita.nvim" },
+  { "olivercederborg/poimandres.nvim" },
+  { "kvrohit/mellow.nvim" },
+  { "gbprod/nord.nvim" },
+  { "Yazeed1s/oh-lucy.nvim" },
+  { "embark-theme/vim" },
+
+  -- permet d'utiliser GBrowse
+  {
+    "shumphrey/fugitive-gitlab.vim",
+    config = function()
+      vim.cmd([[
+    let g:fugitive_gitlab_domains = ['https://gitlab.onera.net/']
+    ]])
+    end,
+  },
+
+  --supportera bientot gitlab pour les issues et MR
+  {
+    "pwntester/octo.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "kyazdani42/nvim-web-devicons",
+    },
+    config = function()
+      require("octo").setup()
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        textobjects = {
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              [",aj"] = "@function.outer",
+              ["]]"] = { query = "@class.outer", desc = "Next class start" },
+              --
+              -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+              ["]o"] = "@loop.*",
+              -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+              --
+              -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+              -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+              ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+              ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+            },
+            goto_next_end = {
+              ["]M"] = "@function.outer",
+              ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+              [",ak"] = "@function.outer",
+              ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+              ["[M"] = "@function.outer",
+              ["[]"] = "@class.outer",
+            },
+            -- Below will go to either the start or the end, whichever is closer.
+            -- Use if you want more granular movements
+            -- Make it even more gradual by adding multiple queries and regex.
+            goto_next = {
+              ["]d"] = "@conditional.outer",
+            },
+            goto_previous = {
+              ["[d"] = "@conditional.outer",
+            },
+          },
+        },
+      })
+    end,
+  },
+  { "stevearc/dressing.nvim",       enabled = true },
+  { "MunifTanjim/nui.nvim",         enabled = true },
+  { 'mrjones2014/smart-splits.nvim' },
+  {
+    "beauwilliams/focus.nvim",
+    config = function()
+      require("focus").setup()
+    end
+  },
+  { "kevinhwang91/nvim-bqf" },
+  {
+    "yorickpeterse/nvim-pqf",
+    config = function()
+      require("pqf").setup()
+    end
+  },
+  -- LSP keymaps
+  {
+    "neovim/nvim-lspconfig",
+    init = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      -- change a keymap
+      -- keys[#keys + 1] = { "K", "<cmd>echo 'hello'<cr>" }
+      -- disable a keymap
+      keys[#keys + 1] = { "gr", false }
+      -- add a keymap
+      -- keys[#keys + 1] = { "H", "<cmd>echo 'hello'<cr>" }
+    end,
+  },
+  require("lazy").setup({
+    {
+      "RutaTang/quicknote.nvim",
+      config = {
+        mode = "portable" -- "portable" | "resident", default to "portable"
+      },
+      dependencies = { "nvim-lua/plenary.nvim" }
+    },
+  })
 }

@@ -72,11 +72,10 @@ vim.keymap.set("n", "s", ":w<CR>", { noremap = false, silent = true })
 --[[ vim.keymap.set("n", "ga", ":lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true }) ]]
 --[[ vim.keymap.set("n", "ga", ":CodeActionMenu<CR>", { noremap = true, silent = true }) ]]
 vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "gf", ":lua vim.lsp.buf.format({async=true})<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gl", ":lua vim.lsp.buf.format({async=true})<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gh", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<space>m", ":lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gk", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
@@ -171,12 +170,15 @@ vim.keymap.set("n", "<leader>nb", "<cmd>Telekasten new_note<CR>", { noremap = tr
 -- vim.keymap.set("v", "<A-l>", ":MoveHBlock(1)<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("v", "<A-h>", ":MoveHBlock(-1)<CR>", { noremap = true, silent = true })
 -- -- Trouble
-vim.keymap.set("n", "<leader>fxx", "<cmd>Trouble<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>fxw", "<cmd>Trouble workspace_diagnostics<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>fxd", "<cmd>Trouble document_diagnostics<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hh", "<cmd>Trouble<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hw", "<cmd>Trouble workspace_diagnostics<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hd", "<cmd>Trouble document_diagnostics<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>fxl", "<cmd>Trouble loclist<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>fxq", "<cmd>Trouble quickfix<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hq", "<cmd>Trouble quickfix<cr>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true })
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<CR>", { remap = true })
+vim.keymap.set("n", "<leader>hR", "<cmd>Trouble lsp_references<CR>", {})
 -- -- Nvim-dap
 vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>ds", "<cmd>lua require'dap'.step_over()<CR>", { silent = true, noremap = true })
@@ -184,41 +186,65 @@ vim.keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>", { sil
 vim.keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_out()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>dui", ":lua require('dapui').toggle()<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dro", "<cmd>lua require'dap'.repl.open()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>duo", "<cmd>lua require'dap'.repl.open()<CR>", { silent = true, noremap = true })
 vim.keymap.set(
   "n",
   "<leader>dj",
   "<cmd>lua require('dap.ext.vscode').load_launchjs(nil, { codelldb= { 'c', 'cpp' } })<CR>",
   { silent = true, noremap = true }
 )
-vim.keymap.set("n", "<leader>df", "<cmd>lua require('dapui').float_element()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dlf", "<cmd>lua require('dapui').float_element()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
+vim.keymap.set("v", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>duu", "<cmd>lua require('dapui').update_render()<CR>", { silent = true, noremap = true })
-
+vim.keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dq", "<cmd>lua require'dap'.step_back()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dp", "<cmd>lua require'dap'.pause()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dg", "<cmd>lua require'dap'.run_to_cursor()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>da", "<cmd>e ./.vscode/launch.json<CR>", { silent = true, noremap = true })
+vim.keymap.set(
+  "n",
+  "<leader>df",
+  "<cmd>lua require('dapui').float_element('stacks')<CR>",
+  { silent = true, noremap = true }
+)
+vim.keymap.set(
+  "n",
+  "<leader>dlb",
+  "<cmd>lua require('dapui').float_element('breakpoints')<CR>",
+  { silent = true, noremap = true }
+)
+vim.keymap.set(
+  "n",
+  "<leader>dz",
+  "<cmd>lua require('dapui').float_element('repl')<CR>",
+  { silent = true, noremap = true }
+)
 -- vim.keymap.set(
 -- 	"n",
 -- 	"<leader>dcc",
 -- 	"<cmd>lua require'telescope'.extensions.dap.commands{}<CR>",
 -- 	{ silent = true, noremap = true }
 -- )
-vim.keymap.set(
-  "n",
-  "<leader>dlb",
-  "<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>",
-  { silent = true, noremap = true }
-)
-vim.keymap.set(
-  "n",
-  "<leader>dv",
-  "<cmd>lua require'telescope'.extensions.dap.variables{}<CR>",
-  { silent = true, noremap = true }
-)
-vim.keymap.set(
-  "n",
-  "<leader>df",
-  "<cmd>lua require'telescope'.extensions.dap.frames{}<CR>",
-  { silent = true, noremap = true }
-)
+-- vim.keymap.set(
+--   "n",
+--   "<leader>dlb",
+--   "<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>",
+--   { silent = true, noremap = true }
+-- )
+-- vim.keymap.set(
+--   "n",
+--   "<leader>dv",
+--   "<cmd>lua require'telescope'.extensions.dap.variables{}<CR>",
+--   { silent = true, noremap = true }
+-- )
+-- vim.keymap.set(
+--   "n",
+--   "<leader>df",
+--   "<cmd>lua require'telescope'.extensions.dap.frames{}<CR>",
+--   { silent = true, noremap = true }
+-- )
 
 local opt = {}
 -- vim.keymap.set("n", "<F7>", ":CMakeBuild <cr>", opt)
@@ -245,7 +271,7 @@ vim.keymap.set("n", "<leader>za", ":tabnew<cr>", opt)
 --[[ vim.keymap.set("n", "²", ":CloseAll<cr>", opt) ]]
 --[[ vim.keymap.set("i", "²", "<C-o>:CloseAll<cr>", opt) ]]
 --[[ vim.keymap.set("t", "²", "<C-\\><C-n>CloseAll<cr>", opt) ]]
-vim.keymap.set("n", "²", ":lua QuitAllLua()<cr>", opt)
+vim.keymap.set("n", "²", ":lua QuitAllLua()<cr>", { silent = true })
 vim.keymap.set("i", "²", "<C-o>:lua QuitAllLua()<cr>", { silent = true })
 
 vim.keymap.set("t", "²", "<C-\\><C-n>:lua QuitAllLua()<cr>", { noremap = true, silent = true })
@@ -310,13 +336,13 @@ vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opt)
 vim.keymap.set("n", "<leader>gC", "<cmd>Telescope git_bcommits<cr>", opt)
 vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", opt)
 vim.keymap.set("n", "<leader>gh", "<cmd>Neogit<cr>", opt)
-vim.keymap.set("n", "<leader>gt", ":SymbolsOutline<cr>", opt)
 
 vim.keymap.set("n", "<leader>hj", "<cmd>lua vim.diagnostic.goto_next()<cr>", opt)
 vim.keymap.set("n", "<leader>hk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opt)
 vim.keymap.set("n", "<leader>hS", "<cmd>Telescope lsp_document_symbols<cr>", opt)
 vim.keymap.set("n", "<leader>hs", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opt)
 vim.keymap.set("n", "<leader>hf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opt)
+vim.keymap.set("n", "<leader>hm", "<cmd>SymbolsOutline<cr>", opt)
 
 -- vim.keymap.set("n", "<leader>sb", "<cmd>Telescope git_branches<cr>", opt)
 -- vim.keymap.set("n", "<leader>sc", "<cmd>Telescope colorscheme<cr>", opt)
@@ -495,12 +521,12 @@ vim.o.inccommand = "split"
 
 --LazyVim
 -- tabs
--- vim.api.nvim_set_keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
--- vim.api.nvim_set_keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
--- vim.api.nvim_set_keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
--- vim.api.nvim_set_keymap("n", "<leader><tab>l", "<cmd>tabnext<cr>", { desc = "Next Tab" })
--- vim.api.nvim_set_keymap("n", "<leader><tab>b", "<cmd>tabclose<cr>", { desc = "Close Tab" })
--- vim.api.nvim_set_keymap("n", "<leader><tab>h", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab>e", "<cmd>tabnew<cr>", { desc = "New Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab><tab>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab>b", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+vim.api.nvim_set_keymap("n", "<leader><tab>h", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- vim.api.nvim_set_keymap("n","<leader>cd", vim.diagnostic.open_float, {desc = "Line Diagnostics" }),
 -- vim.api.nvim_set_keymap("n,       "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" ),
@@ -557,5 +583,10 @@ vim.keymap.set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implem
 vim.keymap.set("n", "gpc", "<cmd>lua require('goto-preview').close_all_win()<CR>", opt)
 vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opt)
 
+vim.keymap.set("n", "<leader>l", "", { desc = "" })
 -- vim.keymap.set("n", "<F2>", "<cmd>:lua require('starry.functions').toggle_style()<CR>")
 -- vim.keymap.set("n", "<F3>", "<cmd>:Starry<CR>")
+vim.keymap.set("n", "<leader>nql", ":lua require('quicknote').NewNoteAtCurrentLine()<cr>", { desc = "" })
+vim.keymap.set("n", "<leader>nqs", ":lua require('quicknote').ShowNoteSigns()<cr>", { desc = "" })
+-- vim.keymap.set("n", "<leader>nqls", ":lua require('quicknote').OpenNoteAtCurrentLine()", { desc = "" })
+vim.keymap.set("n", "<leader>nqw", ":lua require('quicknote').ListNotesForCWD()<cr>", { desc = "" })
