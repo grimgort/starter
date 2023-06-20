@@ -107,6 +107,9 @@ hi TelescopeSelection guifg=#ffffff guibg=#32302f
 ]])
 
 vim.cmd([[autocmd User TelescopePreviewerLoaded setlocal wrap]])
+-- require("telescope.builtin").find_files({ initial_mode = "select" })
+-- require("telescope.builtin").git_files({ initial_mode = "select" })
+
 -- Extensions
 
 -- telescope.load_extension('octo')

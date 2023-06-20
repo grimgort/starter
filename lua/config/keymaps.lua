@@ -41,6 +41,10 @@ vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {
 
 vim.keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>", { noremap = false, silent = true })
 vim.keymap.set("n", "<leader>ef", ":NvimTreeFindFileToggle<CR>", { noremap = false, silent = true })
+
+-- vim.keymap.set("n", "<leader>ee", ":Neotree toggle<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "<leader>ef", ":Neotree toggle current reveal_force_cwd<CR>", { noremap = false, silent = true })
+    
 vim.keymap.set("n", "s", ":w<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<F8>", ":MinimapToggle<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<leader>nm", ":Dispatch npm start<CR>", { noremap = false, silent = false })
@@ -102,6 +106,12 @@ vim.keymap.set("n", "gk", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, sile
 -- )
 -- vim.keymap.set("n", "<leader>f", "<cmd>Telescope git_files<cr>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope projects<CR>", { noremap = true, silent = true })
+-- vim.keymap.set(
+--   "n",
+--   "<leader>p",
+--   '<cmd>lua require"telescope".extensions.project.project{ initial_mode = "normal" }<cr>',
+--   opt
+-- )
 -- vim.keymap.set(
 -- 	"n",
 -- 	"<leader>c",
@@ -180,29 +190,30 @@ vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true })
 vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<CR>", { remap = true })
 vim.keymap.set("n", "<leader>hR", "<cmd>Trouble lsp_references<CR>", {})
 -- -- Nvim-dap
-vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>ds", "<cmd>lua require'dap'.step_over()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_out()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dui", ":lua require('dapui').toggle()<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>duo", "<cmd>lua require'dap'.repl.open()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>ds", "<cmd>lua require'dap'.step_over()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_out()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dui", ":lua require('dapui').toggle()<cr>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>duo", "<cmd>lua require'dap'.repl.open()<CR>", { silent = true, noremap = true })
 vim.keymap.set(
   "n",
-  "<leader>dj",
+  "<leader>dd",
   "<cmd>lua require('dap.ext.vscode').load_launchjs(nil, { codelldb= { 'c', 'cpp' } })<CR>",
   { silent = true, noremap = true }
 )
-vim.keymap.set("n", "<leader>dlf", "<cmd>lua require('dapui').float_element()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
-vim.keymap.set("v", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>duu", "<cmd>lua require('dapui').update_render()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dq", "<cmd>lua require'dap'.step_back()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dp", "<cmd>lua require'dap'.pause()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>dg", "<cmd>lua require'dap'.run_to_cursor()<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>da", "<cmd>e ./.vscode/launch.json<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dlf", "<cmd>lua require('dapui').float_element()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("v", "<leader>de", "<cmd>lua require('dapui').eval()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>duu", "<cmd>lua require('dapui').update_render()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dm", "<cmd>lua require'dap'.step_back()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dp", "<cmd>lua require'dap'.pause()<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>dg", "<cmd>lua require'dap'.run_to_cursor()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dq", "<cmd>e ./.vscode/launch.json<CR>", { silent = true, noremap = true })
 vim.keymap.set(
   "n",
   "<leader>df",
@@ -335,12 +346,13 @@ vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opt)
 vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opt)
 vim.keymap.set("n", "<leader>gC", "<cmd>Telescope git_bcommits<cr>", opt)
 vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", opt)
-vim.keymap.set("n", "<leader>gh", "<cmd>Neogit<cr>", opt)
+vim.keymap.set("n", "<leader>gf", "<cmd>Neogit<cr>", opt)
 
 vim.keymap.set("n", "<leader>hj", "<cmd>lua vim.diagnostic.goto_next()<cr>", opt)
 vim.keymap.set("n", "<leader>hk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opt)
 vim.keymap.set("n", "<leader>hS", "<cmd>Telescope lsp_document_symbols<cr>", opt)
 vim.keymap.set("n", "<leader>hs", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opt)
+vim.keymap.set("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers({ initial_mode = "normal" })<cr>', opt)
 vim.keymap.set("n", "<leader>hf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opt)
 vim.keymap.set("n", "<leader>hm", "<cmd>SymbolsOutline<cr>", opt)
 
@@ -497,25 +509,30 @@ vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 
 vim.keymap.set("n", "<F2>", "<cmd>RandomColorScheme<CR>")
 
-local opts = {}
-vim.api.nvim_set_keymap("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
-vim.api.nvim_set_keymap("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)
-vim.api.nvim_set_keymap("v", "<C-b>", "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>", opts)
+-- local opts = {}
+-- vim.api.nvim_set_keymap("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
+-- vim.api.nvim_set_keymap("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)
+-- vim.api.nvim_set_keymap("v", "<C-b>", "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>", opts)
+--
+-- vim.api.nvim_set_keymap("n", "<leader>rs", "<CMD>SearchReplaceSingleBufferSelections<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", opts)
+--
+-- vim.api.nvim_set_keymap("n", "<leader>rbs", "<CMD>SearchReplaceMultiBufferSelections<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", opts)
+-- vim.api.nvim_set_keymap("n", "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>rs", "<CMD>SearchReplaceSingleBufferSelections<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>rs", "<CMD>SReplace<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>ra", "<CMD>SReplaceAndSave<CR>", {})
 
-vim.api.nvim_set_keymap("n", "<leader>rbs", "<CMD>SearchReplaceMultiBufferSelections<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", opts)
-
+vim.api.nvim_set_keymap("n", "<leader>rz", "<CMD>MurenToggle<CR>", {})
+-- vim.api.nvim_set_keymap("n", "<leader>ra", "<CMD>SReplaceAndSave<CR>", {})
 -- show the effects of a search / replace in a live preview window
 vim.o.inccommand = "split"
 

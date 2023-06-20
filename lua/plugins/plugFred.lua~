@@ -30,7 +30,7 @@ return {
   },
   {
     "kyazdani42/nvim-tree.lua",
-    enabled = true,
+    enabled = false,
     config = function()
       require("plugins.configs.nvimtree")
     end,
@@ -38,7 +38,7 @@ return {
 
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
+    enabled = true,
     keys = {
       {
         "<leader>e",
@@ -241,7 +241,7 @@ return {
       --     }),
       --   })
       -- end,
-      -- -@param opts cmp.ConfigSchema
+      ---@param opts cmp.ConfigSchema
       -- opts = function(_, opts)
       local cmp = require("cmp")
       local lspkind = require("lspkind")

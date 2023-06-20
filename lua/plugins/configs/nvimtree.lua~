@@ -14,12 +14,6 @@
 --
 -- Please see https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach for assistance in migrating.
 --
---
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
 require("nvim-tree").setup()
 
 --

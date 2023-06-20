@@ -52,8 +52,9 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 -- vim.opt.foldenable = false
 -- vim.opt.cursorline = true
-vim.opt.guifont = "JetBrains Mono:h13"
-vim.opt.wrap = true
+-- vim.opt.guifont = "JetBrains Mono:h13"
+vim.cmd({ cmd = "set", args = { "guifont=JetBrains\\ Mono:h13" }, bang = true })
+vim.opt.wrap = false -- bug with treesitter context
 --
 -- function NewNote()
 --   vim.ui.input({ prompt = "Name: ", relative = "editor" }, function(name)
@@ -232,6 +233,7 @@ function QuitAllLua()
   vim.cmd("DiffviewClose")
   vim.cmd("nohlsearch")
   vim.cmd("TroubleClose")
+  -- vim.cmd("Neotree close")
   -- vim.cmd("SymbolsOutlineClose")
   --[[ vim.cmd("Lspsaga close_floaterm") ]]
   require("FTerm").close()
