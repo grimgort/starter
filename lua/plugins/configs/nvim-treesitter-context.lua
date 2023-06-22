@@ -14,6 +14,8 @@ require("treesitter-context").setup({
       "for", -- These won't appear in the context
       "while",
       "if",
+      "elseif",
+      "else",
       "switch",
       "case",
     },

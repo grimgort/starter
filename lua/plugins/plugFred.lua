@@ -479,6 +479,9 @@ return {
   },
   {
     "nvim-pack/nvim-spectre",
+    -- config = function()
+  -- require("plugins.configs.nvim-spectre")
+    -- end,
     -- stylua: ignore
     -- keys = {
     --   { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
@@ -655,6 +658,7 @@ return {
 
     {
       "renerocksai/telekasten.nvim",
+      enabled = true,
       config = function()
         require("plugins.configs.telekasten")
       end,
@@ -780,7 +784,7 @@ return {
   },
   { "Darazaki/indent-o-matic" },
   { "renerocksai/calendar-vim" },
-  -- { "joechrisellis/lsp-format-modifications.nvim", dependencies = { "neovim/nvim-lspconfig" } },
+  { "joechrisellis/lsp-format-modifications.nvim", dependencies = { "neovim/nvim-lspconfig" } },
   -- { "wellle/context.vim" },
   -- nvim-treesitter-context ne prend pas bien les elseif . attendre de nouveau dev cntext.vim a la place work
   {
@@ -1146,5 +1150,11 @@ return {
   require("plugins.configs.executor")
     end,
 
+  },
+  {
+"noib3/nvim-oxi",
+    config = function()
+  -- require("nvim-oxi").setup()
+    end,
   }
 }

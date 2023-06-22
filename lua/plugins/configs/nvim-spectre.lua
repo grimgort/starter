@@ -28,7 +28,7 @@ require('spectre').setup({
     find = {
       --pick one of item in find_engine
       cmd = "rg",
-      options = { "ignore-case" }
+      options = { "ignore-case"}
     },
     replace = {
       --pick one of item in replace_engine
