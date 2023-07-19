@@ -54,7 +54,8 @@ vim.opt.relativenumber = false
 -- vim.opt.cursorline = true
 -- vim.opt.guifont = "JetBrains Mono:h13"
 vim.cmd({ cmd = "set", args = { "guifont=JetBrains\\ Mono:h13" }, bang = true })
-vim.opt.wrap = false -- bug with treesitter context
+-- vim.opt.wrap = false -- bug with treesitter context
+vim.opt.wrap = true -- bug with treesitter context
 --
 -- function NewNote()
 --   vim.ui.input({ prompt = "Name: ", relative = "editor" }, function(name)

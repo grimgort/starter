@@ -258,14 +258,19 @@ vim.keymap.set(
 -- )
 
 local opt = {}
--- vim.keymap.set("n", "<F7>", ":CMakeBuild <cr>", opt)
+-- vim.keymap.set("n", "<F5>", ":CMakeSelectBuildType<cr>", opt)
+-- vim.keymap.set("n", "<F6>", ":CMakeSelectBuildTarget<cr>", opt)
+-- vim.keymap.set("n", "<F7>", ":CMakeBuild --config Debug<cr>", opt)
+-- vim.keymap.set("n", "<F8>", ":CMakeBuild --config Release<cr>", opt)
 vim.keymap.set("n", "<F8>", ":CMakeBuild <cr>", opt)
+vim.keymap.set("n", "<F5>", ":Task start cmake configure<cr>", opt)
 vim.keymap.set("n", "<F6>", ":Task start cmake build_all -j10 --config Release<cr>", opt)
 vim.keymap.set("n", "<F7>", ":Task start cmake build_all -j10 <cr>", opt)
 
+-- vim.keymap.set("n", "<F5>", ":AsyncRun cmake -S . -B build<cr>", opt)
 -- vim.keymap.set("n", "<F6>", ":AsyncRun cmake --build build --config Release -j10<cr>", opt)
 -- vim.keymap.set("n", "<F7>", ":AsyncRun cmake --build build --config Debug -j10<cr>", opt)
-vim.keymap.set("n", "<F5>", ':AsyncRun pwsh -Command "frintelcompile"<cr>', opt)
+vim.keymap.set("n", "<F9>", ':AsyncRun pwsh -Command "frintelcompile"<cr>', opt)
 vim.keymap.set("v", "*", [[y/\V<C-r>=escape(@",'/\')<CR><CR>]], {})
 -- vim.keymap.set("n", "<C-!>", ":%s/", opt)
 -- vim.keymap.set("v", "<C-!>", ":s/", opt)
@@ -600,10 +605,16 @@ vim.keymap.set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implem
 vim.keymap.set("n", "gpc", "<cmd>lua require('goto-preview').close_all_win()<CR>", opt)
 vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opt)
 
-vim.keymap.set("n", "<leader>l", "", { desc = "" })
+-- vim.keymap.set("n", "<leader>l", "", { desc = "" })
 -- vim.keymap.set("n", "<F2>", "<cmd>:lua require('starry.functions').toggle_style()<CR>")
 -- vim.keymap.set("n", "<F3>", "<cmd>:Starry<CR>")
 vim.keymap.set("n", "<leader>nql", ":lua require('quicknote').NewNoteAtCurrentLine()<cr>", { desc = "" })
 vim.keymap.set("n", "<leader>nqs", ":lua require('quicknote').ShowNoteSigns()<cr>", { desc = "" })
 -- vim.keymap.set("n", "<leader>nqls", ":lua require('quicknote').OpenNoteAtCurrentLine()", { desc = "" })
 vim.keymap.set("n", "<leader>nqw", ":lua require('quicknote').ListNotesForCWD()<cr>", { desc = "" })
+
+    local opts = {noremap = true, silent = true, expr = true}
+    vim.keymap.set("n", "<leader>tp", ":lua require('pantran').motion_translate", opts)
+    vim.keymap.set("n", "<leader>to", function() return ":lua require('pantran').motion_translate()" .. "_" end, opts)
+    vim.keymap.set("x", "<leader>tp", ":lua require('pantran').motion_translate", opts)
+ 

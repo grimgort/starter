@@ -1,6 +1,7 @@
 -- SPECIAL lazyvim
 local disableVariable = true
 return {
+  { 'echasnovski/mini.comment', enabled = false },
   {
     "ggandor/leap.nvim",
     enabled = false,
@@ -641,7 +642,7 @@ return {
     end,
   },
   {
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     requires = "nvim-lua/plenary.nvim",
     config = function()
       require("plugins.configs.neogit")
@@ -676,6 +677,7 @@ return {
 
     {
       "Civitasv/cmake-tools.nvim",
+      enabled=true,
       config = function()
         require("plugins.configs.cmakeTool")
       end,
@@ -796,7 +798,7 @@ return {
   {
     "skywind3000/asyncrun.vim",
     disable = disableVariable,
-    enabled = false
+    enabled = true
   },
   {
     "skywind3000/asynctasks.vim",
@@ -1136,7 +1138,27 @@ return {
   --   end
   -- }
   {
-    "potamides/pantran.nvim"
+    "potamides/pantran.nvim",
+    config = function()
+      require('pantran').setup
+      {
+        default_engine="deepl",
+      curl={
+        user_args = {"-x", "http://proxy.onera:80"}
+      },
+  engines = {
+    deepl= {
+      -- Default languages can be defined on a per engine basis. In this case
+      -- `:lua require("pantran.async").run(function()
+      -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
+      -- can be used to list available language identifiers.
+      default_source = "fr",
+      default_target = "en"
+    },
+  },
+      }
+      
+    end,
   },
   { "yaocccc/nvim-hl-mdcodeblock.lua" },
   {
@@ -1156,5 +1178,11 @@ return {
     config = function()
   -- require("nvim-oxi").setup()
     end,
-  }
+  },
+{
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+}
 }

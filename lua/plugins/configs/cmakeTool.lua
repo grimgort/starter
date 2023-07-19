@@ -1,4 +1,5 @@
 require("cmake-tools").setup({
+cmake_regenerate_on_save = false,
   cmake_command = "cmake.exe",
   cmake_build_directory = "build",
   cmake_build_directory_prefix = "build", -- when cmake_build_directory is "", this option will be activated
