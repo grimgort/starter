@@ -1,7 +1,7 @@
 -- SPECIAL lazyvim
 local disableVariable = true
 return {
-  { 'echasnovski/mini.comment', enabled = false },
+  { "echasnovski/mini.comment", enabled = false },
   {
     "ggandor/leap.nvim",
     enabled = false,
@@ -51,22 +51,22 @@ return {
       },
     },
     config = function()
-    require("neo-tree").setup({
-      filesystem = {
-        window = {
-          mappings = {
-            ["h"] = "close_node",
-            ["l"] = "open",
-            ["/"] = "/",
-            ["F"] = "fuzzy_finder",
-          }
-        },
-      filtered_items = {
+      require("neo-tree").setup({
+        filesystem = {
+          window = {
+            mappings = {
+              ["h"] = "close_node",
+              ["l"] = "open",
+              ["/"] = "/",
+              ["F"] = "fuzzy_finder",
+            },
+          },
+          filtered_items = {
             hide_dotfiles = false,
             hide_gitignored = false,
-      }
-      }
-    })
+          },
+        },
+      })
     end,
   },
   {
@@ -99,7 +99,7 @@ return {
       "hrsh7th/cmp-calc",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
-      "rcarriga/cmp-dap"
+      "rcarriga/cmp-dap",
     },
     config = function()
       --   local cmp = require("cmp")
@@ -464,7 +464,7 @@ return {
   { import = "plugins" },
   -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
   -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
-  { 'akinsho/toggleterm.nvim',                            version = "*", config = true },
+  { "akinsho/toggleterm.nvim", version = "*", config = true },
   {
     "numtostr/FTerm.nvim",
     config = function()
@@ -481,7 +481,7 @@ return {
   {
     "nvim-pack/nvim-spectre",
     -- config = function()
-  -- require("plugins.configs.nvim-spectre")
+    -- require("plugins.configs.nvim-spectre")
     -- end,
     -- stylua: ignore
     -- keys = {
@@ -613,17 +613,17 @@ return {
       vim.fn["firenvim#install"](0)
     end,
   },
-  {
-    "phaazon/hop.nvim",
-    event = "BufRead",
-    config = function()
-      require("hop").setup()
-      vim.api.nvim_set_keymap("n", "e", "<cmd>HopChar1<cr>", { silent = true })
-      vim.api.nvim_set_keymap("n", "E", "<cmd>HopWord<cr>", { silent = true })
-      vim.api.nvim_set_keymap("v", "e", "<cmd>HopChar1<cr>", { silent = true })
-      vim.api.nvim_set_keymap("v", "E", "<cmd>HopWord<cr>", { silent = true })
-    end,
-  },
+  -- {
+  --   "phaazon/hop.nvim",
+  --   event = "BufRead",
+  --   config = function()
+  --     require("hop").setup()
+  --     vim.api.nvim_set_keymap("n", "e", "<cmd>HopChar1<cr>", { silent = true })
+  --     vim.api.nvim_set_keymap("n", "E", "<cmd>HopWord<cr>", { silent = true })
+  --     vim.api.nvim_set_keymap("v", "e", "<cmd>HopChar1<cr>", { silent = true })
+  --     vim.api.nvim_set_keymap("v", "E", "<cmd>HopWord<cr>", { silent = true })
+  --   end,
+  -- },
   { "kg8m/vim-simple-align" },
   {
     "vim-test/vim-test",
@@ -677,7 +677,7 @@ return {
 
     {
       "Civitasv/cmake-tools.nvim",
-      enabled=true,
+      enabled = true,
       config = function()
         require("plugins.configs.cmakeTool")
       end,
@@ -728,7 +728,7 @@ return {
     },
   },
   {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     enabled = false,
     branch = "main",
     config = function()
@@ -763,7 +763,7 @@ return {
   --   end,
   -- },
   {
-    "mrjones2014/nvim-ts-rainbow",
+    "HiPhish/rainbow-delimiters.nvim",
     config = function()
       require("plugins.configs.nvim-ts-rainbow")
     end,
@@ -792,18 +792,18 @@ return {
   {
     "lewis6991/nvim-treesitter-context",
     config = function()
-  require("plugins.configs.nvim-treesitter-context")
+      require("plugins.configs.nvim-treesitter-context")
     end,
   },
   {
     "skywind3000/asyncrun.vim",
     disable = disableVariable,
-    enabled = true
+    enabled = true,
   },
   {
     "skywind3000/asynctasks.vim",
     disable = disableVariable,
-    enabled = false
+    enabled = false,
   },
   -- {
   --   "joechrisellis/lsp-format-modifications.nvim",
@@ -1045,23 +1045,30 @@ return {
       })
     end,
   },
-  { "stevearc/dressing.nvim",       enabled = true },
-  { "MunifTanjim/nui.nvim",         enabled = true },
-  { 'mrjones2014/smart-splits.nvim' },
+  { "stevearc/dressing.nvim", enabled = true },
+  { "MunifTanjim/nui.nvim", enabled = true },
+  { "mrjones2014/smart-splits.nvim" },
   {
     "beauwilliams/focus.nvim",
     enabled = false,
     config = function()
       require("focus").setup()
-    end
+    end,
   },
   { "kevinhwang91/nvim-bqf" },
+  -- {
+  --   "yorickpeterse/nvim-pqf",
+  --   config = function()
+  --     require("pqf").setup()
+  --   end,
+  -- },
   {
-    "yorickpeterse/nvim-pqf",
+    "ashfinal/qfview.nvim",
     config = function()
-      require("pqf").setup()
-    end
+      require("qfview").setup()
+    end,
   },
+
   -- LSP keymaps
   {
     "neovim/nvim-lspconfig",
@@ -1087,10 +1094,10 @@ return {
   --   end,
   -- },
   {
-    'chomosuke/term-edit.nvim',
+    "chomosuke/term-edit.nvim",
     enabled = false,
     lazy = false, -- or ft = 'toggleterm' if you use toggleterm.nvim
-    version = '1.*',
+    version = "1.*",
   },
   { "vim-scripts/DoxygenToolkit.vim", disable = disableVariable },
   -- {
@@ -1140,49 +1147,76 @@ return {
   {
     "potamides/pantran.nvim",
     config = function()
-      require('pantran').setup
-      {
-        default_engine="deepl",
-      curl={
-        user_args = {"-x", "http://proxy.onera:80"}
-      },
-  engines = {
-    deepl= {
-      -- Default languages can be defined on a per engine basis. In this case
-      -- `:lua require("pantran.async").run(function()
-      -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
-      -- can be used to list available language identifiers.
-      default_source = "fr",
-      default_target = "en"
-    },
-  },
-      }
-      
+      require("pantran").setup({
+        curl = {
+          user_args = { "-x" ,"http://proxy.onera:80" },
+        },
+        engines = {
+          deepl = {
+            -- Default languages can be defined on a per engine basis. In this case
+            -- `:lua require("pantran.async").run(function()
+            -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
+            -- can be used to list available language identifiers.
+            default_source = "fr",
+            default_target = "en",
+          },
+        },
+      })
     end,
   },
   { "yaocccc/nvim-hl-mdcodeblock.lua" },
   {
-    'AckslD/muren.nvim',
+    "AckslD/muren.nvim",
     config = true,
   },
   {
     "google/executor.nvim",
     enabled = false,
     config = function()
-  require("plugins.configs.executor")
+      require("plugins.configs.executor")
     end,
-
   },
   {
-"noib3/nvim-oxi",
+    "noib3/nvim-oxi",
     config = function()
-  -- require("nvim-oxi").setup()
+      -- require("nvim-oxi").setup()
     end,
   },
-{
-    'numToStr/Comment.nvim',
+  {
+    "numToStr/Comment.nvim",
     config = function()
-        require('Comment').setup()
-    end
-}
+      require("Comment").setup()
+    end,
+  },
+  {
+    "zaldih/themery.nvim",
+    config = function()
+      require("themery").setup()
+    end,
+  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- -- stylua: ignore
+  -- keys = {
+  --   { "e", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+  --   { "E", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+  --   { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+  --   { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+  --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  -- },
+  -- },
+{
+  "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+},
 }

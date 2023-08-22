@@ -43,9 +43,9 @@ vim.keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>", { noremap = false, sile
 vim.keymap.set("n", "<leader>ef", ":NvimTreeFindFileToggle<CR>", { noremap = false, silent = true })
 
 -- vim.keymap.set("n", "<leader>ee", ":Neotree toggle<CR>", { noremap = false, silent = true })
--- vim.keymap.set("n", "<leader>ef", ":Neotree toggle current reveal_force_cwd<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "<leader>ef", ":Neotree toggle reveal<CR>", { noremap = false, silent = true })
     
-vim.keymap.set("n", "s", ":w<CR>", { noremap = false, silent = true })
+vim.keymap.set("n", "e", ":w<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<F8>", ":MinimapToggle<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "<leader>nm", ":Dispatch npm start<CR>", { noremap = false, silent = false })
 -- -- Buffers
@@ -79,7 +79,7 @@ vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", { noremap = true,
 vim.keymap.set("n", "gl", ":lua vim.lsp.buf.format({async=true})<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gh", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<space>m", ":lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
--- vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gk", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
@@ -186,8 +186,8 @@ vim.keymap.set("n", "<leader>hd", "<cmd>Trouble document_diagnostics<cr>", { sil
 vim.keymap.set("n", "<leader>fxl", "<cmd>Trouble loclist<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>hq", "<cmd>Trouble quickfix<cr>", { silent = true, noremap = true })
 -- vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true })
-vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<CR>", { remap = true })
+-- vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references<CR>", { noremap = true })
+-- vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<CR>", { remap = true })
 vim.keymap.set("n", "<leader>hR", "<cmd>Trouble lsp_references<CR>", {})
 -- -- Nvim-dap
 -- vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", { silent = true, noremap = true })
