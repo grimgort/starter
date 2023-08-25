@@ -1056,18 +1056,23 @@ return {
     end,
   },
   { "kevinhwang91/nvim-bqf" },
-  -- {
-  --   "yorickpeterse/nvim-pqf",
-  --   config = function()
-  --     require("pqf").setup()
-  --   end,
-  -- },
   {
-    "ashfinal/qfview.nvim",
+    "yorickpeterse/nvim-pqf",
     config = function()
-      require("qfview").setup()
+      require("pqf").setup()
     end,
   },
+--   {
+--   "ashfinal/qfview.nvim",
+--   event = "UIEnter",
+--   config = true,
+-- },
+  -- {
+  --   "ashfinal/qfview.nvim",
+  --   config = function()
+  --     require("qfview").setup()
+  --   end,
+  -- },
 
   -- LSP keymaps
   {

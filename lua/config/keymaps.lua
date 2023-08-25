@@ -196,7 +196,7 @@ vim.keymap.set("n", "<leader>hR", "<cmd>Trouble lsp_references<CR>", {})
 -- vim.keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>", { silent = true, noremap = true })
 -- vim.keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_out()<CR>", { silent = true, noremap = true })
 -- vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true, noremap = true })
--- vim.keymap.set("n", "<leader>dui", ":lua require('dapui').toggle()<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>dui", ":lua require('dapui').toggle()<cr>", { silent = true, noremap = true })
 -- vim.keymap.set("n", "<leader>duo", "<cmd>lua require'dap'.repl.open()<CR>", { silent = true, noremap = true })
 vim.keymap.set(
   "n",
@@ -222,7 +222,7 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  "<leader>dlb",
+  "<leader>dh",
   "<cmd>lua require('dapui').float_element('breakpoints')<CR>",
   { silent = true, noremap = true }
 )
@@ -358,7 +358,7 @@ vim.keymap.set("n", "<leader>hk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opt
 vim.keymap.set("n", "<leader>hS", "<cmd>Telescope lsp_document_symbols<cr>", opt)
 vim.keymap.set("n", "<leader>hs", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opt)
 vim.keymap.set("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers({ initial_mode = "normal" })<cr>', opt)
-vim.keymap.set("n", "<leader>hf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opt)
+vim.keymap.set("n", "<leader>hf", "<cmd>lua vim.lsp.buf.format()<cr>", opt)
 vim.keymap.set("n", "<leader>hm", "<cmd>SymbolsOutline<cr>", opt)
 
 -- vim.keymap.set("n", "<leader>sb", "<cmd>Telescope git_branches<cr>", opt)
@@ -367,7 +367,7 @@ vim.keymap.set("n", "<leader>hm", "<cmd>SymbolsOutline<cr>", opt)
 -- vim.keymap.set("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", opt)
 -- vim.keymap.set("n", "<leader>sH", "<cmd>Telescope highlights<cr>", opt)
 -- vim.keymap.set("n", "<leader>sM", "<cmd>Telescope man_pages<cr>", opt)
--- vim.keymap.set("n", "<leader>sr", "<cmd>Telescope oldfiles<cr>", opt)
+vim.keymap.set("n", "<leader>sr", "<cmd>Telescope oldfiles<cr>", { desc = "oldfiles" })
 -- vim.keymap.set("n", "<leader>sR", "<cmd>Telescope registers<cr>", opt)
 -- vim.keymap.set("n", "<leader>st", "<cmd>Telescope live_grep<cr>", opt)
 -- vim.keymap.set("n", "<leader>ss", "<cmd>Telescope grep_string<cr>", opt)
