@@ -628,19 +628,19 @@ return {
   {
     "vim-test/vim-test",
   },
-  {
-    "akinsho/git-conflict.nvim",
-    config = function()
-      require("git-conflict").setup({
-        default_mappings = true, -- disable buffer local mapping created by this plugin
-        disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        --[[ highlights = { -- They must have background color, otherwise the default color will be used ]]
-        --[[   incoming = "DiffText", ]]
-        --[[   current = "DiffAdd", ]]
-        --[[ }, ]]
-      })
-    end,
-  },
+  -- {
+  --   "akinsho/git-conflict.nvim",
+  --   config = function()
+  --     require("git-conflict").setup({
+  --       default_mappings = true, -- disable buffer local mapping created by this plugin
+  --       disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+  --       --[[ highlights = { -- They must have background color, otherwise the default color will be used ]]
+  --       --[[   incoming = "DiffText", ]]
+  --       --[[   current = "DiffAdd", ]]
+  --       --[[ }, ]]
+  --     })
+  --   end,
+  -- },
   {
     "NeogitOrg/neogit",
     requires = "nvim-lua/plenary.nvim",
@@ -682,14 +682,14 @@ return {
         require("plugins.configs.cmakeTool")
       end,
     },
-    {
-      "dnlhc/glance.nvim",
-      config = function()
-        require("glance").setup({
-          -- your configuration
-        })
-      end,
-    },
+    -- {
+    --   "dnlhc/glance.nvim",
+    --   config = function()
+    --     require("glance").setup({
+    --       -- your configuration
+    --     })
+    --   end,
+    -- },
     {
       "mcchrish/zenbones.nvim",
       -- Optionally install Lush. Allows for more configuration or extending the colorscheme
@@ -1062,11 +1062,11 @@ return {
       require("pqf").setup()
     end,
   },
---   {
---   "ashfinal/qfview.nvim",
---   event = "UIEnter",
---   config = true,
--- },
+  --   {
+  --   "ashfinal/qfview.nvim",
+  --   event = "UIEnter",
+  --   config = true,
+  -- },
   -- {
   --   "ashfinal/qfview.nvim",
   --   config = function()
@@ -1154,7 +1154,7 @@ return {
     config = function()
       require("pantran").setup({
         curl = {
-          user_args = { "-x" ,"http://proxy.onera:80" },
+          user_args = { "-x", "http://proxy.onera:80" },
         },
         engines = {
           deepl = {
@@ -1174,13 +1174,13 @@ return {
     "AckslD/muren.nvim",
     config = true,
   },
-  {
-    "google/executor.nvim",
-    enabled = false,
-    config = function()
-      require("plugins.configs.executor")
-    end,
-  },
+  -- {
+  --   "google/executor.nvim",
+  --   enabled = false,
+  --   config = function()
+  --     require("plugins.configs.executor")
+  --   end,
+  -- },
   {
     "noib3/nvim-oxi",
     config = function()
@@ -1193,12 +1193,12 @@ return {
       require("Comment").setup()
     end,
   },
-  {
-    "zaldih/themery.nvim",
-    config = function()
-      require("themery").setup()
-    end,
-  },
+  -- {
+  --   "zaldih/themery.nvim",
+  --   config = function()
+  --     require("themery").setup()
+  --   end,
+  -- },
   -- {
   --   "folke/flash.nvim",
   --   event = "VeryLazy",
@@ -1212,16 +1212,23 @@ return {
   --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   -- },
   -- },
-{
-  "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("chatgpt").setup()
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-},
+  -- {
+  --   "jackMort/ChatGPT.nvim", -- c'est payant
+  --     event = "VeryLazy",
+  --     config = function()
+  --       require("chatgpt").setup()
+  --     end,
+  --     dependencies = {
+  --       "MunifTanjim/nui.nvim",
+  --       "nvim-lua/plenary.nvim",
+  --       "nvim-telescope/telescope.nvim"
+  --     }
+  -- },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   config = function()
+  --     require("copilot").setup()
+  --   end,
+  -- },
 }
+

@@ -244,3 +244,5 @@ function QuitAllLua()
   require("goto-preview").close_all_win()
   require("notify").dismiss({ silent = true, pending = true })
 end
+
+
